@@ -40,7 +40,6 @@ public struct ProgressChartView: View {
 	public var body: some View {
 		VStack {
 			GeometryReader { _ in
-
 				VStack(alignment: .leading) {
 					CardTitleView(titleText: self.titleText,
 					              mainText: mainText,
