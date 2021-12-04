@@ -1,20 +1,15 @@
-// Copyright (c) 2021 Sleepy.
-
 import SwiftUI
 
-public struct PagingView<Content>: View where Content: View {
-	@Binding private var index: Int
-	private let maxIndex: Int
-	private let content: () -> Content
+public struct PaginationView<Content: View>: View {
 
+    // MARK: - Properties
+
+	@Binding private var index: Int
 	@State private var offset = CGFloat.zero
 	@State private var dragging = false
 
-	public init(index: Binding<Int>, maxIndex: Int, @ViewBuilder content: @escaping () -> Content) {
-		_index = index
-		self.maxIndex = maxIndex
-		self.content = content
-	}
+    private let maxIndex: Int
+    private let content: () -> Content
 
 	public var body: some View {
 		ZStack(alignment: .bottomTrailing) {
@@ -44,12 +39,21 @@ public struct PagingView<Content>: View where Content: View {
 				)
 			}
 			.clipped()
-
-			PageControl(index: $index, maxIndex: maxIndex)
+            PageControlView(index: $index, maxIndex: maxIndex)
 		}
 	}
 
-	func offset(in geometry: GeometryProxy) -> CGFloat {
+    // MARK: - Init
+
+    public init(index: Binding<Int>, maxIndex: Int, @ViewBuilder content: @escaping () -> Content) {
+        _index = index
+        self.maxIndex = maxIndex
+        self.content = content
+    }
+
+    // MARK: - Private methods
+
+	private func offset(in geometry: GeometryProxy) -> CGFloat {
 		if self.dragging {
 			return max(min(self.offset, 0), -CGFloat(self.maxIndex) * geometry.size.width)
 		} else {
@@ -57,7 +61,7 @@ public struct PagingView<Content>: View where Content: View {
 		}
 	}
 
-	func clampedIndex(from predictedIndex: Int) -> Int {
+	private func clampedIndex(from predictedIndex: Int) -> Int {
 		let newIndex = min(max(predictedIndex, index - 1), index + 1)
 		guard newIndex >= 0 else {
 			return 0
@@ -69,18 +73,20 @@ public struct PagingView<Content>: View where Content: View {
 	}
 }
 
-struct PageControl: View {
+// MARK: - PageControlView
+
+struct PageControlView: View {
 	@Binding var index: Int
 	let maxIndex: Int
 
 	var body: some View {
 		HStack(spacing: 8) {
-			ForEach(0 ... maxIndex, id: \.self) { index in
+			ForEach(0...maxIndex, id: \.self) { index in
 				Circle()
 					.fill(index == self.index ? Color.white : Color.gray)
 					.frame(width: 8, height: 8)
 			}
 		}
-		.padding(15)
+		.padding(16)
 	}
 }

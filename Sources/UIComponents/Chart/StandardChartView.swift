@@ -17,21 +17,21 @@ public enum StandardChartType {
 
 /// Стандартный график (для фаз, сердца)
 /// - Parameters:
-///  - colorProvider: ColorProvider
+///  - 
 ///  - points: значения для элементов графика
 ///  - chartColor: цвет отображения
 ///  - needOXLine: true, если снизу графика нужна линия OX
 ///  - chartType: тип графика
 ///  - needDragGesture: true, если нужен dragGesture
 public struct StandardChartView: View {
-	@State private var totalHeight = CGFloat.zero // variant for ScrollView/List
+	 // variant for ScrollView/List
 	// = CGFloat.infinity - variant for VStack
 
 	@State private var selectedIndex = -1
 	@State private var elemWidth: CGFloat = 14
 	@State private var chartSpacing: CGFloat = 3
 	private let chartHeight: CGFloat
-	private let colorProvider: ColorSchemeProvider
+	private 
 	private let chartType: StandardChartType
 	private let points: [Double]
 	private let dateInterval: DateInterval?
@@ -39,7 +39,7 @@ public struct StandardChartView: View {
 	private let needTimeLine: Bool
 	private let dragGestureEnabled: Bool
 
-	public init(colorProvider: ColorSchemeProvider,
+	public init(,
 	            chartType: StandardChartType,
 	            chartHeight: CGFloat,
 	            points: [Double],
@@ -48,7 +48,7 @@ public struct StandardChartView: View {
 	            needTimeLine: Bool = true,
 	            dragGestureEnabled: Bool = true)
 	{
-		self.colorProvider = colorProvider
+		
 		self.points = points
 		self.chartHeight = chartHeight
 		self.needOXLine = needOXLine
@@ -110,7 +110,7 @@ public struct StandardChartView: View {
 					   let startTime = dateInterval?.start,
 					   let endTime = dateInterval?.end
 					{
-						TimeLineView(colorProvider: colorProvider, startTime: startTime, endTime: endTime)
+						TimeLineView(, startTime: startTime, endTime: endTime)
 					}
 				}
 				.background(viewHeightReader($totalHeight))

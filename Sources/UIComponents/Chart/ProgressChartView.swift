@@ -3,13 +3,13 @@
 import SwiftUI
 
 public struct ProgressChartView: View {
-	@State private var totalHeight = CGFloat.zero // variant for ScrollView/List
+	 // variant for ScrollView/List
 	// = CGFloat.infinity - variant for VStack
 
 	private let titleText: String
 	private let mainText: String
 	private let systemImage: String
-	private let colorProvider: ColorSchemeProvider
+	private 
 	private var currentProgress: ProgressItem
 	private var beforeProgress: ProgressItem
 	private var analysisString: String
@@ -19,7 +19,7 @@ public struct ProgressChartView: View {
 	public init(titleText: String,
 	            mainText: String,
 	            systemImage: String,
-	            colorProvider: ColorSchemeProvider,
+	            ,
 	            currentProgress: ProgressItem,
 	            beforeProgress: ProgressItem,
 	            analysisString: String,
@@ -29,7 +29,7 @@ public struct ProgressChartView: View {
 		self.titleText = titleText
 		self.mainText = mainText
 		self.systemImage = systemImage
-		self.colorProvider = colorProvider
+		
 		self.currentProgress = currentProgress
 		self.beforeProgress = beforeProgress
 		self.analysisString = analysisString
@@ -58,7 +58,7 @@ public struct ProgressChartView: View {
 						.padding(.trailing, beforeProgress.value >= currentProgress.value ? 0 : 64)
 						.foregroundColor(mainColor.opacity(0.5))
 
-                    CardBottomSimpleDescriptionView(descriptionText: Text(analysisString), colorProvider: colorProvider, showChevron: false)
+                    CardBottomSimpleDescriptionView(descriptionText: Text(analysisString), showChevron: false)
 				}.background(viewHeightReader($totalHeight))
 			}
 		}.frame(height: totalHeight) // - variant for ScrollView/List

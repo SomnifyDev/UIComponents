@@ -36,11 +36,10 @@ public struct BannerView: View {
 	// MARK: Private properties
 
 	@State private var viewDidClose = false
-	@State private var totalHeight = CGFloat.zero // variant for ScrollView/List
+	 // variant for ScrollView/List
 	// = CGFloat.infinity - variant for VStack
 
 	private let bannerViewType: BannerViewType
-	private let colorProvider: ColorSchemeProvider
 
 	private var iconName: String = ""
 	private var titleText: String = ""
@@ -48,10 +47,8 @@ public struct BannerView: View {
 
 	// MARK: Init
 
-	public init(bannerViewType: BannerViewType, colorProvider: ColorSchemeProvider) {
+	public init(bannerViewType: BannerViewType) {
 		self.bannerViewType = bannerViewType
-		self.colorProvider = colorProvider
-
 		self.titleText = self.getTitleText()
 		self.dataText = self.getDataText()
 		self.iconName = self.getIconName()
@@ -78,10 +75,8 @@ public struct BannerView: View {
 						              mainText: self.dataText,
 						              leftIcon: Image(systemName: self.iconName),
 						              rightIcon: Image(systemName: "xmark.circle"),
-						              titleColor: bannerViewType == .advice(type: .some, imageSystemName: "")
-						              	? self.colorProvider.sleepyColorScheme.getColor(of: .textsColors(.adviceText))
-						              	: self.colorProvider.sleepyColorScheme.getColor(of: .heart(.heartColor)),
-						              mainTextColor: self.colorProvider.sleepyColorScheme.getColor(of: .textsColors(.secondaryText)),
+                                      titleColor: bannerViewType == .advice(type: .some, imageSystemName: "") ? ColorsRepository.Text.advice : ColorsRepository.Heart.heart,
+                                      mainTextColor: ColorsRepository.Text.secondary,
 						              showSeparator: bannerViewType == .advice(type: .some, imageSystemName: ""),
 						              colorProvider: self.colorProvider,
 						              onCloseTapAction: {
@@ -101,7 +96,7 @@ public struct BannerView: View {
 								.cornerRadius(12)
 						}
 
-						CardBottomSimpleDescriptionView(descriptionText: Text("Read more"), colorProvider: colorProvider, showChevron: true)
+						CardBottomSimpleDescriptionView(descriptionText: Text("Read more"), showChevron: true)
 					}
 					.frame(width: geometry.size.width)
 					.background(viewHeightReader($totalHeight))
@@ -194,6 +189,6 @@ public struct BannerView: View {
 public struct ErrorView_Previews: PreviewProvider {
 	public static var previews: some View {
 		BannerView(bannerViewType: .brokenData(type: .heart),
-		           colorProvider: ColorSchemeProvider())
+		           ())
 	}
 }

@@ -41,6 +41,7 @@ public extension Text {
 		bold()
 			.fixedSize(horizontal: false, vertical: true)
 			.foregroundColor(color)
+            .lineLimit(1)
 	}
 
 	func cardDescriptionTextModifier(color: Color) -> some View {
@@ -114,6 +115,7 @@ public extension Text {
 			.lineLimit(1)
 			.opacity(0.3)
 	}
+
 }
 
 public struct SectionNameTextView: View {

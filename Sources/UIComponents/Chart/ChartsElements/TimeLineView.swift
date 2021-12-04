@@ -3,12 +3,12 @@
 import SwiftUI
 
 struct TimeLineView: View {
-	private let colorProvider: ColorSchemeProvider
+	private 
 	private let startTime: Date
 	private let endTime: Date
 
-	init(colorProvider: ColorSchemeProvider, startTime: Date, endTime: Date) {
-		self.colorProvider = colorProvider
+	init(, startTime: Date, endTime: Date) {
+		
 		self.startTime = startTime
 		self.endTime = endTime
 	}
