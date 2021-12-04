@@ -18,8 +18,10 @@ public struct CardTitleView: View {
                     Text(trailText)
                         .cardTitleTextModifier(color: viewModel.titleColor)
                 }
-                makeTrailIcon(with: viewModel.trailIcon, action: viewModel.trailIconAction)
-                    .foregroundColor(viewModel.titleColor)
+                if let trailIcon = viewModel.trailIcon {
+                    trailIcon
+                        .foregroundColor(viewModel.titleColor)
+                }
             }
             if let description = viewModel.description,
                let descriptionColor = viewModel.descriptionColor {
@@ -38,19 +40,6 @@ public struct CardTitleView: View {
 
     public init(with viewModel: CardTitleViewModel) {
         self.viewModel = viewModel
-    }
-
-    // MARK: - Private methods
-
-    @ViewBuilder
-    private func makeTrailIcon(with trailIcon: Image?, action: (() -> ())?) -> some View {
-        if let trailIcon = trailIcon {
-            Button(action: action ?? {}) {
-                trailIcon
-            }
-        } else {
-            EmptyView()
-        }
     }
 
 }

@@ -7,8 +7,7 @@ public struct CardTitleViewModel {
     let leadIcon: Image
     let title: String
     let description: String?
-    let trailIcon: Image?
-    let trailIconAction: (() -> ())?
+    let trailIcon: ImageWithOptionalActionView?
     let trailText: String?
     let titleColor: Color
     let descriptionColor: Color?
@@ -21,20 +20,17 @@ public struct CardTitleViewModel {
         leadIcon: Image,
         title: String,
         description: String?,
-        trailIcon: ImageExtended?,
-        trailIconAction: (() -> ())?,
+        trailIcon: ImageWithOptionalActionView?,
         trailText: String?,
         titleColor: Color,
         descriptionColor: Color?,
-        shouldShowSeparator: Bool,
-        
+        shouldShowSeparator: Bool
     ) {
         self.leadIcon = leadIcon
         self.title = title
         self.titleColor = titleColor
         self.trailText = trailText
         self.trailIcon = trailIcon
-        self.trailIconAction = trailIconAction
         self.description = description
         self.descriptionColor = descriptionColor
         self.shouldShowSeparator = shouldShowSeparator

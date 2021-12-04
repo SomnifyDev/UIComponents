@@ -1,24 +1,23 @@
 import SwiftUI
 
-public struct ImageWithActionView: View {
+public struct ImageWithOptionalActionView: View {
 
     // MARK: - Properties
 
     let image: Image
-    let action: () -> ()
+    let action: (() -> ())?
 
     public var body: some View {
-        Button(action: action) {
+        Button(action: action ?? {}) {
             image
         }
-        .frame(minHeight: 0)
     }
 
     // MARK: - Init
 
     public init(
         image: Image,
-        action: @escaping () -> ()
+        action: (() -> ())?
     ) {
         self.image = image
         self.action = action

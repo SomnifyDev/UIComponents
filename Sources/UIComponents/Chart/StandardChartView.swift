@@ -113,7 +113,7 @@ public struct StandardChartView: View {
 						TimeLineView(, startTime: startTime, endTime: endTime)
 					}
 				}
-				.background(viewHeightReader($totalHeight))
+				
 				.frame(width: geometry.size.width)
 				.onAppear {
 					let chartWidth = CGFloat(points.count) * Constants.standardWidth + self.chartSpacing * CGFloat(points.count - 1)
@@ -129,7 +129,7 @@ public struct StandardChartView: View {
 					}
 				}
 			}
-		}.frame(height: totalHeight) // - variant for ScrollView/List
+		} // - variant for ScrollView/List
 	}
 
 	private func getChartElement(for chartType: StandardChartType, width _: CGFloat, value: Double) -> some View {

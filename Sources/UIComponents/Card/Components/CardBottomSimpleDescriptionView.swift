@@ -6,11 +6,11 @@ public struct CardBottomSimpleDescriptionView: View {
 
     // MARK: - Properties
 
-    let descriptionText: String
+    let description: String
 
     public var body: some View {
         HStack {
-            Text(descriptionText)
+            Text(description)
                 .cardBottomTextModifier(color: ColorsRepository.Text.standard)
             Spacer()
         }
@@ -20,8 +20,8 @@ public struct CardBottomSimpleDescriptionView: View {
 
     // MARK: - Init
 
-    public init(with descriptionText: String) {
-        self.descriptionText = descriptionText
+    public init(with description: String) {
+        self.description = description
     }
 
 }
