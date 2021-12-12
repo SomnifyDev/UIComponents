@@ -10,11 +10,9 @@ public struct BannerView<Content: View>: View {
 
     public var body: some View {
         if shouldShowAdvice {
-            VStack(spacing: 8) {
-                CardTitleView(with: viewModel.cardTitleViewModel)
+            CardWithContentView(with: viewModel.cardTitleViewModel) {
                 content()
             }
-            .frame(minWidth: 0)
         }
     }
 
