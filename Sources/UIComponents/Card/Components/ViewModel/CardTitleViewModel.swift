@@ -34,7 +34,6 @@ public struct CardTitleViewModel {
         self.description = description
         self.descriptionColor = descriptionColor
         self.shouldShowSeparator = shouldShowSeparator
-        
     }
 
 }

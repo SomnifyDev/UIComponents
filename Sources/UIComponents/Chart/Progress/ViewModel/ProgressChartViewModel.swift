@@ -1,14 +1,17 @@
-import Foundation
+import SwiftUI
 
 public struct ProgressChartViewModel {
 
     // MARK: - Properties
 
-    public let cardTitleViewModel: CardTitleViewModel
-    public let description: String
-    public let beforeProgressViewModel: ProgressElementViewModel
-    public let currentProgressViewModel: ProgressElementViewModel
-
+    let cardTitleViewModel: CardTitleViewModel
+    let description: String
+    let beforeProgressViewModel: ProgressElementViewModel
+    let currentProgressViewModel: ProgressElementViewModel
+    var trailingPaddingValue: CGFloat {
+        return beforeProgressViewModel.value >= currentProgressViewModel.value ? 0 : 64
+    }
+    
     // MARK: - Init
 
     public init(

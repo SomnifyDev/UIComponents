@@ -4,7 +4,7 @@ public struct StatisticsCellCollectionView: View {
 
     // MARK: - Properties
 
-    let viewModel: StatisticsCellCollectionViewModel
+    private let viewModel: StatisticsCellCollectionViewModel
 
     public var body: some View {
         VStack(spacing: -8) {

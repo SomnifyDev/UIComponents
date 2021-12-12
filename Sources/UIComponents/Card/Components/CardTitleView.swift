@@ -4,7 +4,7 @@ public struct CardTitleView: View {
 
     // MARK: - Properties
 
-    let viewModel: CardTitleViewModel
+    private let viewModel: CardTitleViewModel
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 4) {

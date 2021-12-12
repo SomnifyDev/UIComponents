@@ -5,7 +5,7 @@ public struct StatisticsCellView: View {
 
     // MARK: - Properties
 
-    let viewModel: StatisticsCellViewModel
+    private let viewModel: StatisticsCellViewModel
 
     public var body: some View {
         HStack {

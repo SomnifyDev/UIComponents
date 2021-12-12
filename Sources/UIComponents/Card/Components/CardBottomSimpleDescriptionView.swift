@@ -6,7 +6,7 @@ public struct CardBottomSimpleDescriptionView: View {
 
     // MARK: - Properties
 
-    let description: String
+    private let description: String
 
     public var body: some View {
         HStack {
