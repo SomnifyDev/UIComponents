@@ -2,12 +2,12 @@
 
 import SwiftUI
 
-public struct CardWithContentView<T: View, U: View>: View {
+public struct CardWithContentView<Content: View>: View {
 
     // MARK: - Properties
 
     private let viewModel: CardTitleViewModel
-    private let content: () -> T
+    private let content: () -> Content
 
     public var body: some View {
         VStack(alignment: .leading) {
@@ -21,7 +21,7 @@ public struct CardWithContentView<T: View, U: View>: View {
 
     public init(
         with viewModel: CardTitleViewModel,
-        @ViewBuilder content: @escaping () -> T
+        @ViewBuilder content: @escaping () -> Content
     ) {
         self.viewModel = viewModel
         self.content = content
