@@ -8,40 +8,18 @@
 import SwiftUI
 
 public struct StatsIndicatorView: View {
-    public struct StatsIndicatorModel: Hashable {
-        let name: String
-        let description: String
-        let value: Double
-        let valueNormInterval: ClosedRange<Double>
-        let unit: String
-        let feedback: String
-
-        public init(name: String, description: String, value: Double, valueNormInterval: ClosedRange<Double>, unit: String, feedback: String) {
-            self.name = name
-            self.description = description
-            self.value = value
-            self.valueNormInterval = valueNormInterval
-            self.unit = unit
-            self.feedback = feedback
-        }
-
-        public static func == (lhs: StatsIndicatorModel, rhs: StatsIndicatorModel) -> Bool {
-            return lhs.name == rhs.name
-        }
-    }
-
     @State private var showShowPopover = false
 
-    var model: StatsIndicatorModel
+    private var viewModel: StatsIndicatorViewModel
 
-    public init(model: StatsIndicatorModel) {
-        self.model = model
+    public init(viewModel: StatsIndicatorViewModel) {
+        self.viewModel = viewModel
     }
 
     public var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(model.name)
+                Text(viewModel.name)
                     .bold()
                     .font(.system(size: 20))
 
@@ -51,6 +29,7 @@ public struct StatsIndicatorView: View {
                     .onTapGesture {
                         self.showShowPopover = true
                     }
+                // TODO: добавить поповер - пока этот компонент swiftui работает не как надо
 //                    .popover(isPresented: self.$showShowPopover, content: {
 //                        Text("popover")
 //                    })
@@ -62,19 +41,17 @@ public struct StatsIndicatorView: View {
 
             HStack {
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(String(format: "%.1f", model.value))
-                        .foregroundColor(model.value >= model.valueNormInterval.lowerBound &&
-                                         model.value <= model.valueNormInterval.upperBound
-                                         ? .green : .red)
+                    Text(String(format: "%.1f", viewModel.value))
+                        .foregroundColor(viewModel.titleColor)
                         .bold()
                         .font(.system(size: 18))
                         .padding(.top, 8)
 
-                    Text("(norm is - \(String(format: "%.1f", model.valueNormInterval.lowerBound)) - \(String(format: "%.1f", model.valueNormInterval.upperBound)))")
+                    Text("(norm is - \(String(format: "%.1f", viewModel.healthyValueRange.lowerBound)) - \(String(format: "%.1f", viewModel.healthyValueRange.upperBound)))")
                         .foregroundColor(Color(.lightGray))
                         .font(.system(size: 12))
 
-                    Text(model.feedback)
+                    Text(viewModel.feedback)
                         .padding(.top, 8)
                         .font(.system(size: 12))
                 }
@@ -86,7 +63,7 @@ public struct StatsIndicatorView: View {
 
 struct StatsIndicatorView_Previews: PreviewProvider {
     static var previews: some View {
-        StatsIndicatorView(model: .init(name: "SSDN",
+        StatsIndicatorView(viewModel: .init(name: "SSDN",
                                         description: "some description some description some description some description",
                                         value: 12,
                                         valueNormInterval: 10...11,

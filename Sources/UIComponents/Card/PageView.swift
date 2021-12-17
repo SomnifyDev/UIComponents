@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-public struct PagingView<Content>: View where Content: View {
+public struct PagingView<Content: View>: View {
     @Binding private var index: Int
     private let maxIndex: Int
     private let content: () -> Content
