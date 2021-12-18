@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct StatsIndicatorView: View {
-    @State private var showShowPopover = false
+    @State private var shouldShowPopover = false
 
     private var viewModel: StatsIndicatorViewModel
 
@@ -27,12 +27,10 @@ public struct StatsIndicatorView: View {
 
                 Image(systemName: "questionmark.circle")
                     .onTapGesture {
-                        self.showShowPopover = true
+                        self.shouldShowPopover = true
                     }
                 // TODO: добавить поповер - пока этот компонент swiftui работает не как надо
-//                    .popover(isPresented: self.$showShowPopover, content: {
-//                        Text("popover")
-//                    })
+//                   .popover(isPresented: self.$shouldShowPopover, content: {})
 
             }
 
