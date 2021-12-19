@@ -3,7 +3,7 @@ import SwiftUI
 public enum ColorsRepository {
 
 	public enum General {
-		static let appBackground = Color("backgroundColor")
+        static let appBackground = Color("backgroundColor")
 		static let mainSleepy = Color("mainColor")
 		static let health = Color("healthColor")
 	}

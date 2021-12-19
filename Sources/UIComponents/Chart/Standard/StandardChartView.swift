@@ -11,8 +11,14 @@ private enum Constants {
 
 public enum StandardChartType {
     case phasesChart
-    case defaultChart(barType: BarType)
+    case defaultChart(barType: ChartType)
     case verticalProgress(foregroundElementColor: Color, backgroundElementColor: Color, max: Double)
+
+    public enum ChartType {
+        case rectangular(color: Color)
+        case rectangularFilled(foregroundElementColor: Color, backgroundElementColor: Color, fillPercentage: Double)
+        case circular(color: Color)
+    }
 }
 
 public struct StandardChartView: View {
@@ -28,15 +34,15 @@ public struct StandardChartView: View {
     private let needTimeLine: Bool
     private let dragGestureEnabled: Bool
 
-    public init(chartType: StandardChartType,
-                chartHeight: CGFloat,
-                points: [Double],
-                dateInterval: DateInterval?,
-                needOXLine: Bool = true,
-                needTimeLine: Bool = true,
-                dragGestureEnabled: Bool = true)
-    {
-
+    public init(
+        chartType: StandardChartType,
+        chartHeight: CGFloat,
+        points: [Double],
+        dateInterval: DateInterval?,
+        needOXLine: Bool = true,
+        needTimeLine: Bool = true,
+        dragGestureEnabled: Bool = true
+    ) {
         self.points = points
         self.chartHeight = chartHeight
         self.needOXLine = needOXLine
@@ -131,24 +137,30 @@ public struct StandardChartView: View {
         switch chartType {
         case .phasesChart:
             return StandardChartElementView(
-                width: self.elemWidth,
-                height: height,
-                type: .rectangle(color: self.getPhaseColor(for: value))
+                viewModel: StandardChartElementViewModel(
+                    width: elemWidth,
+                    height: height,
+                    type: .rectangular(color: getPhaseColor(for: value))
+                )
             )
         case let .defaultChart(barType):
             return StandardChartElementView(
-                width: self.elemWidth,
-                height: height,
-                type: barType
+                viewModel: StandardChartElementViewModel(
+                    width: elemWidth,
+                    height: height,
+                    type: barType
+                )
             )
         case let .verticalProgress(foregroundElementColor, backgroundElementColor, max):
             return StandardChartElementView(
-                width: self.elemWidth,
-                height: self.chartHeight,
-                type: .filled(
-                    foregroundElementColor: foregroundElementColor,
-                    backgroundElementColor: backgroundElementColor,
-                    percentage: value / max
+                viewModel: StandardChartElementViewModel(
+                    width: elemWidth,
+                    height: chartHeight,
+                    type: .rectangularFilled(
+                        foregroundElementColor: foregroundElementColor,
+                        backgroundElementColor: backgroundElementColor,
+                        fillPercentage: value / max
+                    )
                 )
             )
         }
