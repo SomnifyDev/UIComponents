@@ -16,7 +16,6 @@ public struct StatsIndicatorViewModel: Hashable {
     let feedback: String
 
     var titleColor: Color {
-        healthyValueRange.contains(value)
         return healthyValueRange.contains(value) ? .green : .red
     }
 
