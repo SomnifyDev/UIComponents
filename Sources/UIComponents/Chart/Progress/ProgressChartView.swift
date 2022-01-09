@@ -14,12 +14,12 @@ public struct ProgressChartView: View {
 
             ProgressElementView(with: viewModel.currentProgressViewModel)
                 .padding(.top, 8)
-                .padding(.trailing, viewModel.trailingPaddingValue)
+                .padding(.trailing, viewModel.currentTrailingPaddingValue)
                 .foregroundColor(ColorsRepository.General.mainSleepy)
 
             ProgressElementView(with: viewModel.beforeProgressViewModel)
                 .padding(.top, 8)
-                .padding(.trailing, viewModel.trailingPaddingValue)
+                .padding(.trailing, viewModel.beforeTrailingPaddingValue)
                 .foregroundColor(ColorsRepository.General.mainSleepy.opacity(0.5))
 
             CardBottomSimpleDescriptionView(with: viewModel.description)

@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 
 public struct MotivationCellViewModel {
 
@@ -10,10 +10,19 @@ public struct MotivationCellViewModel {
     // MARK: - Init
 
     public init(
-        cardTitleViewModel: CardTitleViewModel,
+        leadIcon: Image,
+        title: String,
+        description: String?,
         url: URL
     ) {
-        self.cardTitleViewModel = cardTitleViewModel
+        self.cardTitleViewModel = .init(leadIcon: leadIcon,
+                                        title: title,
+                                        description: description,
+                                        trailIcon: .init(image: IconsRepository.chevronRight, action: nil),
+                                        trailText: "Read more",
+                                        titleColor: ColorsRepository.Text.standard,
+                                        descriptionColor: ColorsRepository.Text.secondary,
+                                        shouldShowSeparator: false)
         self.url = url
     }
 

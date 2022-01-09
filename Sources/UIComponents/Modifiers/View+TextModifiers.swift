@@ -104,7 +104,7 @@ public extension Text {
 	func healthTypeSwitchTextModifier() -> some View {
 		padding([.top, .bottom], 6)
 			.padding([.leading, .trailing], 10)
-			.font(.system(size: 14).weight(.semibold))
+			.font(.system(size: 14).weight(.bold))
 			.foregroundColor(.white)
 	}
 

@@ -8,8 +8,13 @@ public struct ProgressChartViewModel {
     let description: String
     let beforeProgressViewModel: ProgressElementViewModel
     let currentProgressViewModel: ProgressElementViewModel
-    var trailingPaddingValue: CGFloat {
+
+    var beforeTrailingPaddingValue: CGFloat {
         return beforeProgressViewModel.value >= currentProgressViewModel.value ? 0 : 64
+    }
+
+    var currentTrailingPaddingValue: CGFloat {
+        return beforeProgressViewModel.value >= currentProgressViewModel.value ? 64 : 0
     }
     
     // MARK: - Init

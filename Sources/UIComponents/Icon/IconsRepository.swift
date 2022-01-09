@@ -10,5 +10,9 @@ public enum IconsRepository {
     public static let sleep = Image(systemName: "sleep")
     public static let heartFilled = Image(systemName: "suit.heart.fill")
     public static let lungs = Image(systemName: "lungs")
-
+    public static let waveform = Image(systemName: "waveform")
+    public static let microphone = Image(systemName: "mic.circle.fill")
+    public static let chevronRight = Image(systemName: "chevron.right")
+    public static let timer = Image(systemName: "timer")
+    public static let article = Image(systemName: "heart.text.square")
 }

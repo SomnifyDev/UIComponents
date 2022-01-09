@@ -4,7 +4,7 @@ public struct StatisticsCellCollectionViewModel {
 
     // MARK: - Properties
 
-    let cellModels: [StatisticsCellViewModel]
+    public let cellModels: [StatisticsCellViewModel]
 
     // MARK: - Init
 
