@@ -15,4 +15,5 @@ public enum IconsRepository {
     public static let chevronRight = Image(systemName: "chevron.right")
     public static let timer = Image(systemName: "timer")
     public static let article = Image(systemName: "heart.text.square")
+    public static let questionmark = Image(systemName: "questionmark.square.dashed")
 }
