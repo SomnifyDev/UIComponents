@@ -24,7 +24,7 @@ public struct BannerView<Content: View>: View {
     ) {
         self.viewModel = viewModel
         self.content = content
-        shouldShowAdvice = hideAdviceIfNeeded()
+        shouldShowAdvice = !hideAdviceIfNeeded()
     }
 
     // MARK: - Private methods
