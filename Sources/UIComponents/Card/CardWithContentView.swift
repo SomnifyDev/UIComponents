@@ -14,7 +14,6 @@ public struct CardWithContentView<Content: View>: View {
             CardTitleView(with: viewModel)
             content()
         }
-        .frame(minHeight: 0)
     }
 
     // MARK: - Init

@@ -4,14 +4,14 @@ public struct CardTitleViewModel {
 
     // MARK: - Properties
 
-    let leadIcon: Image
-    let title: String
-    let description: String?
-    let trailIcon: ImageWithOptionalActionView?
-    let trailText: String?
-    let titleColor: Color
-    let descriptionColor: Color?
-    let shouldShowSeparator: Bool
+    public let leadIcon: Image
+    public let title: String
+    public let description: String?
+    public let trailIcon: ImageWithOptionalActionView?
+    public let trailText: String?
+    public let titleColor: Color
+    public let descriptionColor: Color?
+    public let shouldShowSeparator: Bool
     
 
     // MARK: - Init
