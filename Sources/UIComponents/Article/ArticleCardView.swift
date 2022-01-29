@@ -4,7 +4,7 @@ public struct ArticleCardView<Content: View>: View {
 
     // MARK: - Properties
 
-    @State var shouldOpenDestinationView: Bool = false
+    @Binding var shouldOpenDestinationView: Bool
     private let viewModel: ArticleCardViewModel
     private let destinationView: Content
 
@@ -50,10 +50,12 @@ public struct ArticleCardView<Content: View>: View {
 
     public init(
         with viewModel: ArticleCardViewModel,
+        shouldOpenDestinationView: Binding<Bool>,
         destinationView: Content
     ) {
-        self.viewModel = viewModel
         self.destinationView = destinationView
+        self.viewModel = viewModel
+        self._shouldOpenDestinationView = shouldOpenDestinationView
     }
 
 }

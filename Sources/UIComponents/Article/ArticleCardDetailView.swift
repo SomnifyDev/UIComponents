@@ -4,7 +4,7 @@ public struct ArticleCardDetailView: View {
 
     // MARK: - Properties
     
-    @Binding var showSleepImportanceView: Bool
+    @Binding var showDetailView: Bool
     private let viewModel: ArticleCardDetailViewModel
 
     public var body: some View {
@@ -31,7 +31,8 @@ public struct ArticleCardDetailView: View {
                 trailing:
                     Button(
                         action: {
-                            self.showSleepImportanceView = false
+                            self.showDetailView = false
+                            print(showDetailView)
                         }, label: {
                             Text("Done")
                                 .fontWeight(.regular)
@@ -45,10 +46,10 @@ public struct ArticleCardDetailView: View {
 
     public init(
         with viewModel: ArticleCardDetailViewModel,
-        showSleepImportanceView: Binding<Bool>
+        showDetailView: Binding<Bool>
     ) {
         self.viewModel = viewModel
-        self._showSleepImportanceView = showSleepImportanceView
+        self._showDetailView = showDetailView
     }
 
 
