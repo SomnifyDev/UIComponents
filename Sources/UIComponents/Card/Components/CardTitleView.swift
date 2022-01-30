@@ -27,6 +27,7 @@ public struct CardTitleView: View {
                let descriptionColor = viewModel.descriptionColor {
                 Text(description)
                     .cardDescriptionTextModifier(color: descriptionColor)
+                    .multilineTextAlignment(.leading)
             }
             if viewModel.shouldShowSeparator {
                 Divider()

@@ -12,6 +12,7 @@ public struct CardBottomSimpleDescriptionView: View {
         HStack {
             Text(description)
                 .cardBottomTextModifier(color: ColorsRepository.Text.standard)
+                .multilineTextAlignment(.leading)
             Spacer()
         }
         .padding(.top, 4)

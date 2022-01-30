@@ -39,9 +39,9 @@ public struct StandardChartView: View {
         chartHeight: CGFloat,
         points: [Double],
         dateInterval: DateInterval?,
-        needOXLine: Bool = true,
-        needTimeLine: Bool = true,
-        dragGestureEnabled: Bool = true
+        needOXLine: Bool,
+        needTimeLine: Bool,
+        dragGestureEnabled: Bool
     ) {
         self.points = points
         self.chartHeight = chartHeight
@@ -53,86 +53,83 @@ public struct StandardChartView: View {
     }
 
     public var body: some View {
-        VStack {
-            GeometryReader { geometry in
-                VStack(alignment: .center, spacing: Constants.stackSpacing) {
-                    if self.dragGestureEnabled {
-                        Text(self.selectedIndex >= 0 ? self.getTapDescription(for: self.selectedIndex) : "")
-                            .frame(height: Constants.tapDescriptionHeight)
-                    }
+        GeometryReader { geometry in
+            VStack(alignment: .center, spacing: Constants.stackSpacing) {
 
-                    HStack(alignment: .bottom, spacing: self.chartSpacing) {
-                        ForEach(0 ..< self.points.count, id: \.self) { index in
+                if self.dragGestureEnabled {
+                    Text(self.selectedIndex >= 0 ? self.getTapDescription(for: self.selectedIndex) : "")
+                        .frame(height: Constants.tapDescriptionHeight)
+                }
 
-                            VStack {
-                                if selectedIndex == index {
-                                    getChartElement(for: chartType, width: elemWidth, value: points[index])
-                                        .colorInvert()
-                                } else {
-                                    getChartElement(for: chartType, width: elemWidth, value: points[index])
-                                }
+                Spacer()
 
-                                if needOXLine {
-                                    getOXLineElement()
-                                }
+                HStack(alignment: .bottom, spacing: self.chartSpacing) {
+                    ForEach(0 ..< self.points.count, id: \.self) { index in
+                        VStack {
+                            if selectedIndex == index {
+                                getChartElement(value: points[index])
+                                    .colorInvert()
+                            } else {
+                                getChartElement(value: points[index])
                             }
 
-                            switch self.chartType {
-                            case .verticalProgress:
-                                if index != self.points.count - 1 {
-                                    Spacer()
-                                }
-                            default:
-                                EmptyView()
+                            if needOXLine {
+                                getOXLineElement()
                             }
                         }
-                    }
-                    .frame(height: chartHeight + Constants.tapDescriptionHeight + (needOXLine ? 2 * Constants.stackSpacing : 0))
-                    .allowsHitTesting(dragGestureEnabled)
-                    .gesture(
-                        DragGesture(
-                            minimumDistance: 5,
-                            coordinateSpace: .global
-                        ).onChanged { gesture in
-                            let selected = Int(gesture.location.x / (geometry.size.width / (CGFloat(points.count) - self.chartSpacing)))
 
-                            if selected != selectedIndex, selected < points.count {
-                                selectedIndex = selected
-                                UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 0.6)
+                        switch self.chartType {
+                        case .verticalProgress:
+                            if index != self.points.count - 1 {
+                                Spacer()
                             }
-                        }.onEnded { _ in
-                            selectedIndex = -1
+                        default:
+                            EmptyView()
                         }
-                    )
-
-                    if needTimeLine,
-                       let startTime = dateInterval?.start,
-                       let endTime = dateInterval?.end
-                    {
-                        TimeLineView(startTime: startTime, endTime: endTime)
                     }
                 }
-                .frame(maxWidth: geometry.size.width, minHeight: 0)
-                .onAppear {
-                    print(chartHeight + Constants.tapDescriptionHeight + (needOXLine ? 2 * Constants.stackSpacing : 0))
-                    print(geometry.size.height)
-                    let chartWidth = CGFloat(points.count) * Constants.standardWidth + self.chartSpacing * CGFloat(points.count - 1)
-                    if chartWidth > geometry.size.width {
-                        self.elemWidth = abs(geometry.size.width - self.chartSpacing * CGFloat(points.count - 1)) / CGFloat(points.count)
-                    }
+                .allowsHitTesting(dragGestureEnabled)
+                .gesture(
+                    DragGesture(
+                        minimumDistance: 5,
+                        coordinateSpace: .global
+                    ).onChanged { gesture in
+                        let selected = Int(gesture.location.x / (geometry.size.width / (CGFloat(points.count) - self.chartSpacing)))
 
-                    switch self.chartType {
-                    case .verticalProgress:
-                        self.chartSpacing = 0
-                    default:
-                        self.chartSpacing = 3
+                        if selected != selectedIndex, selected < points.count {
+                            selectedIndex = selected
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 0.6)
+                        }
+                    }.onEnded { _ in
+                        selectedIndex = -1
                     }
+                )
+
+                if needTimeLine,
+                   let startTime = dateInterval?.start,
+                   let endTime = dateInterval?.end
+                {
+                    TimeLineView(startTime: startTime, endTime: endTime)
+                }
+            }
+            .onAppear {
+                let chartWidth = CGFloat(points.count) * Constants.standardWidth + self.chartSpacing * CGFloat(points.count - 1)
+                if chartWidth > geometry.size.width {
+                    self.elemWidth = abs(geometry.size.width - self.chartSpacing * CGFloat(points.count - 1)) / CGFloat(points.count)
+                }
+
+                switch self.chartType {
+                case .verticalProgress:
+                    self.chartSpacing = 0
+                default:
+                    self.chartSpacing = 3
                 }
             }
         }
+        .frame(height: chartHeight + (needOXLine ? 30 : 0) + (needTimeLine ? 30 : 0) + (dragGestureEnabled ? 16 : 0))
     }
 
-    private func getChartElement(for chartType: StandardChartType, width _: CGFloat, value: Double) -> some View {
+    private func getChartElement(value: Double) -> some View {
         let minimum = self.points.min() ?? 0
         let maximum = self.points.max() ?? 0
 
