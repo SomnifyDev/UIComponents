@@ -2,16 +2,9 @@
 
 import SwiftUI
 
-private enum Constants {
-    static let descriptionHeight: CGFloat = 13
-    static let standardWidth: CGFloat = 14
-    static let tapDescriptionHeight: CGFloat = 16
-    static let stackSpacing: CGFloat = 4
-}
-
 public enum StandardChartType {
     case phasesChart
-    case defaultChart(barType: ChartType)
+    case defaultChart(barType: ChartType, stringFormatter: String = "%.1f")
     case verticalProgress(foregroundElementColor: Color, backgroundElementColor: Color, max: Double)
 
     public enum ChartType {
@@ -22,34 +15,45 @@ public enum StandardChartType {
 }
 
 public struct StandardChartView: View {
+    public struct DisplayItem {
+        public let date: Date
+        public let value: Double
+
+        public init(date: Date, value: Double) {
+            self.date = date
+            self.value = value
+        }
+    }
+
+    enum Constants {
+        static let descriptionHeight: CGFloat = 13
+        static let standardWidth: CGFloat = 14
+        static let tapDescriptionHeight: CGFloat = 16
+        static let stackSpacing: CGFloat = 4
+    }
 
     @State private var selectedIndex = -1
     @State private var elemWidth: CGFloat = 14
     @State private var chartSpacing: CGFloat = 3
-    private let chartHeight: CGFloat
+
     private let chartType: StandardChartType
-    private let points: [Double]
-    private let dateInterval: DateInterval?
-    private let needOXLine: Bool
-    private let needTimeLine: Bool
+    private let points: [DisplayItem]
+    private let chartHeight: CGFloat
+    private let timeLineType: OXChartLineView.OXChartLineType
     private let dragGestureEnabled: Bool
 
     public init(
         chartType: StandardChartType,
+        points: [DisplayItem],
         chartHeight: CGFloat,
-        points: [Double],
-        dateInterval: DateInterval?,
-        needOXLine: Bool,
-        needTimeLine: Bool,
-        dragGestureEnabled: Bool
+        timeLineType: OXChartLineView.OXChartLineType,
+        dragGestureEnabled: Bool = true
     ) {
+        self.chartType = chartType
         self.points = points
         self.chartHeight = chartHeight
-        self.needOXLine = needOXLine
-        self.chartType = chartType
+        self.timeLineType = timeLineType
         self.dragGestureEnabled = dragGestureEnabled
-        self.needTimeLine = needTimeLine
-        self.dateInterval = dateInterval
     }
 
     public var body: some View {
@@ -67,14 +71,14 @@ public struct StandardChartView: View {
                     ForEach(0 ..< self.points.count, id: \.self) { index in
                         VStack {
                             if selectedIndex == index {
-                                getChartElement(value: points[index])
+                                self.getChartElement(value: points[index].value)
                                     .colorInvert()
                             } else {
-                                getChartElement(value: points[index])
+                                self.getChartElement(value: points[index].value)
                             }
 
-                            if needOXLine {
-                                getOXLineElement()
+                            if self.timeLineType.isOXLineNeeded {
+                                self.getOXLineElement()
                             }
                         }
 
@@ -105,12 +109,7 @@ public struct StandardChartView: View {
                     }
                 )
 
-                if needTimeLine,
-                   let startTime = dateInterval?.start,
-                   let endTime = dateInterval?.end
-                {
-                    TimeLineView(startTime: startTime, endTime: endTime)
-                }
+                OXChartLineView(chartLineType: self.timeLineType)
             }
             .onAppear {
                 let chartWidth = CGFloat(points.count) * Constants.standardWidth + self.chartSpacing * CGFloat(points.count - 1)
@@ -126,12 +125,12 @@ public struct StandardChartView: View {
                 }
             }
         }
-        .frame(height: chartHeight + (needOXLine ? 30 : 0) + (needTimeLine ? 30 : 0) + (dragGestureEnabled ? 16 : 0))
+        .frame(height: chartHeight + (self.timeLineType.isOXLineNeeded ? 30 : 0) + (self.timeLineType.isTimeLineNeeded ? 30 : 0) + (dragGestureEnabled ? 16 : 0))
     }
 
     private func getChartElement(value: Double) -> some View {
-        let minimum = self.points.min() ?? 0
-        let maximum = self.points.max() ?? 0
+        let minimum = self.points.map{ $0.value}.min() ?? 0
+        let maximum = self.points.map{ $0.value}.max() ?? 0
 
         let height = max(chartHeight * 0.2, chartHeight * ((value - minimum) / (maximum - minimum)))
 
@@ -144,7 +143,7 @@ public struct StandardChartView: View {
                     type: .rectangular(color: getPhaseColor(for: value))
                 )
             )
-        case let .defaultChart(barType):
+        case .defaultChart(let barType, _):
             return StandardChartElementView(
                 viewModel: StandardChartElementViewModel(
                     width: elemWidth,
@@ -176,22 +175,22 @@ public struct StandardChartView: View {
     }
 
     private func getTapDescription(for index: Int) -> String {
-        guard let dateIntervalSeconds = self.dateInterval?.duration,
-              let sampleDate = self.dateInterval?.start.addingTimeInterval(TimeInterval(Int(dateIntervalSeconds) / self.points.count * index)) else { return "" }
-        let value = self.points[index]
+        let item = self.points[index]
 
         var finalString = ""
         switch self.chartType {
         case .phasesChart:
-            finalString = (value < 0.55
+            finalString = (item.value < 0.55
                            ? "Deep sleep phase"
-                           : (value >= 1
+                           : (item.value >= 1
                               ? "Probably woke up"
                               : "Light sleep phase"))
+        case .defaultChart(let barType, let stringFormatter):
+            return "\(String(format: stringFormatter, item.value)), \(item.date.getFormattedDate(format: .time))"
         default:
-            finalString = String(format: "%.0f", self.points[self.selectedIndex])
+            return String(item.value)
         }
-        return finalString + ", \(sampleDate.getFormattedDate(format: "HH:mm"))"
+        return ""
     }
     
     private func getOXLineElement() -> some View {
