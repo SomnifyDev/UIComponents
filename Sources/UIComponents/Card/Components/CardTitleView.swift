@@ -5,6 +5,7 @@ public struct CardTitleView: View {
     // MARK: - Properties
 
     private let viewModel: CardTitleViewModel
+    private let trailIconAction: (() -> ())?
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -19,8 +20,11 @@ public struct CardTitleView: View {
                         .cardTitleTextModifier(color: viewModel.titleColor)
                 }
                 if let trailIcon = viewModel.trailIcon {
-                    trailIcon
-                        .foregroundColor(viewModel.titleColor)
+                    Button(action: trailIconAction ?? {}) {
+                        trailIcon
+                            .foregroundColor(viewModel.titleColor)
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             if let description = viewModel.description,
@@ -39,8 +43,12 @@ public struct CardTitleView: View {
 
     // MARK: - Init
 
-    public init(with viewModel: CardTitleViewModel) {
+    public init(
+        with viewModel: CardTitleViewModel,
+        trailIconAction: (() -> ())? = nil
+    ) {
         self.viewModel = viewModel
+        self.trailIconAction = trailIconAction
     }
 
 }

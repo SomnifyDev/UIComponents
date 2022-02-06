@@ -4,15 +4,13 @@ public struct BannerView<Content: View>: View {
 
     // MARK: - Properties
 
-    @State private var shouldShowAdvice: Bool = true
     private let viewModel: BannerViewModel<Content>
+    private let trailIconAction: (() -> ())?
     private let content: () -> Content
 
     public var body: some View {
-        if shouldShowAdvice {
-            CardWithContentView(with: viewModel.cardTitleViewModel) {
-                content()
-            }
+        CardWithContentView(with: viewModel.cardTitleViewModel, trailIconAction: trailIconAction) {
+            content()
         }
     }
 
@@ -20,17 +18,12 @@ public struct BannerView<Content: View>: View {
 
     public init(
         with viewModel: BannerViewModel<Content>,
+        trailIconAction: (() -> ())?,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.viewModel = viewModel
+        self.trailIconAction = trailIconAction
         self.content = content
-        shouldShowAdvice = !hideAdviceIfNeeded()
-    }
-
-    // MARK: - Private methods
-
-    private func hideAdviceIfNeeded() -> Bool {
-        return UserDefaults.standard.object(forKey: viewModel.bannerIdentifier) == nil
     }
 
 }

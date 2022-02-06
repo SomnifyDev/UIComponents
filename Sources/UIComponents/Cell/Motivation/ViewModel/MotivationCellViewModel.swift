@@ -18,7 +18,7 @@ public struct MotivationCellViewModel {
         self.cardTitleViewModel = .init(leadIcon: leadIcon,
                                         title: title,
                                         description: description,
-                                        trailIcon: .init(image: IconsRepository.chevronRight, action: nil),
+                                        trailIcon: IconsRepository.chevronRight,
                                         trailText: "Read more",
                                         titleColor: ColorsRepository.Text.standard,
                                         descriptionColor: ColorsRepository.Text.secondary,
