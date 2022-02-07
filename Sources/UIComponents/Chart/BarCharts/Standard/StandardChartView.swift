@@ -39,14 +39,14 @@ public struct StandardChartView: View {
     private let chartType: StandardChartType
     private let points: [DisplayItem]
     private let chartHeight: CGFloat
-    private let timeLineType: OXChartLineView.OXChartLineType
+    private let timeLineType: OXChartLineType
     private let dragGestureEnabled: Bool
 
     public init(
         chartType: StandardChartType,
         points: [DisplayItem],
         chartHeight: CGFloat,
-        timeLineType: OXChartLineView.OXChartLineType,
+        timeLineType: OXChartLineType,
         dragGestureEnabled: Bool = true
     ) {
         self.chartType = chartType
@@ -177,16 +177,24 @@ public struct StandardChartView: View {
     private func getTapDescription(for index: Int) -> String {
         let item = self.points[index]
 
-        var finalString = ""
         switch self.chartType {
         case .phasesChart:
-            finalString = (item.value < 0.55
-                           ? "Deep sleep phase"
-                           : (item.value >= 1
-                              ? "Probably woke up"
-                              : "Light sleep phase"))
+            let phaseDescription = (item.value < 0.55
+                                    ? "Deep sleep phase"
+                                    : (item.value >= 1
+                                       ? "Probably woke up"
+                                       : "Light sleep phase"))
+            return "\(phaseDescription), \(item.date.getFormattedDate(format: .time))"
+
         case .defaultChart(let barType, let stringFormatter):
-            return "\(String(format: stringFormatter, item.value)), \(item.date.getFormattedDate(format: .time))"
+            var format: Date.StringFormatType = .time
+
+            if case .some(_, let formatType) = self.timeLineType,
+               let dateFormatType = formatType {
+                format = dateFormatType
+            }
+            return "\(String(format: stringFormatter, item.value)), \(item.date.getFormattedDate(format: format))"
+
         default:
             return String(item.value)
         }

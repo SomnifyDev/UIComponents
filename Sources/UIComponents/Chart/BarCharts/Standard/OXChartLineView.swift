@@ -2,38 +2,37 @@
 
 import SwiftUI
 
-public struct OXChartLineView: View {
-    public enum OXChartLineType {
-        case some(dateInterval: DateInterval?, formatType: Date.StringFormatType?)
-        case none
+public enum OXChartLineType {
+    case some(dateInterval: DateInterval?, formatType: Date.StringFormatType?)
+    case none
 
-        var isOXLineNeeded: Bool {
-            switch self {
-            case .some:
-                return true
-            case .none:
-                return false
-            }
+    var isOXLineNeeded: Bool {
+        switch self {
+        case .some:
+            return true
+        case .none:
+            return false
         }
-
-        var isTimeLineNeeded: Bool {
-            switch self {
-            case .some(let dateInterval, let formatType):
-                return dateInterval != nil && formatType != nil
-            case .none:
-                return false
-            }
-        }
-
     }
 
+    var isTimeLineNeeded: Bool {
+        switch self {
+        case .some(let dateInterval, let formatType):
+            return dateInterval != nil && formatType != nil
+        case .none:
+            return false
+        }
+    }
+}
+
+public struct OXChartLineView: View {
     let chartLineType: OXChartLineType
 
     public var body: some View {
-        HStack {
-            if case .some(let dateInterval, let formatType) = chartLineType,
-               let dateInterval = dateInterval,
-               let formatType = formatType {
+        if case .some(let dateInterval, let formatType) = chartLineType,
+           let dateInterval = dateInterval,
+           let formatType = formatType {
+            HStack {
                 Text(dateInterval.start.getFormattedDate(format: formatType))
                     .regularTextModifier(color: ColorsRepository.Text.standard, size: 10, opacity: 0.4)
 
@@ -41,8 +40,6 @@ public struct OXChartLineView: View {
 
                 Text(dateInterval.end.getFormattedDate(format: formatType))
                     .regularTextModifier(color: ColorsRepository.Text.standard, size: 10, opacity: 0.4)
-            } else {
-                EmptyView()
             }
         }
     }
