@@ -7,7 +7,7 @@ public struct CardTitleViewModel {
     public let leadIcon: Image
     public let title: String
     public let description: String?
-    public let trailIcon: ImageWithOptionalActionView?
+    public let trailIcon: Image?
     public let trailText: String?
     public let titleColor: Color
     public let descriptionColor: Color?
@@ -20,7 +20,7 @@ public struct CardTitleViewModel {
         leadIcon: Image,
         title: String,
         description: String?,
-        trailIcon: ImageWithOptionalActionView?,
+        trailIcon: Image?,
         trailText: String?,
         titleColor: Color,
         descriptionColor: Color?,
