@@ -14,17 +14,17 @@ public enum StandardChartType {
     }
 }
 
-public struct StandardChartView: View {
-    public struct DisplayItem {
-        public let date: Date
-        public let value: Double
+public struct ChartPointDisplayItem {
+    public let date: Date
+    public let value: Double
 
-        public init(date: Date, value: Double) {
-            self.date = date
-            self.value = value
-        }
+    public init(date: Date, value: Double) {
+        self.date = date
+        self.value = value
     }
+}
 
+public struct StandardChartView: View {
     enum Constants {
         static let descriptionHeight: CGFloat = 13
         static let standardWidth: CGFloat = 14
@@ -37,14 +37,14 @@ public struct StandardChartView: View {
     @State private var chartSpacing: CGFloat = 3
 
     private let chartType: StandardChartType
-    private let points: [DisplayItem]
+    private let points: [ChartPointDisplayItem]
     private let chartHeight: CGFloat
     private let timeLineType: OXChartLineType
     private let dragGestureEnabled: Bool
 
     public init(
         chartType: StandardChartType,
-        points: [DisplayItem],
+        points: [ChartPointDisplayItem],
         chartHeight: CGFloat,
         timeLineType: OXChartLineType,
         dragGestureEnabled: Bool = true
