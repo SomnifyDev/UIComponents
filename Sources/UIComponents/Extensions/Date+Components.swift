@@ -3,6 +3,7 @@
 import Foundation
 
 extension Date {
+
     public enum StringFormatType: String {
         case days = "dd.MM"
         case time = "HH:mm"
