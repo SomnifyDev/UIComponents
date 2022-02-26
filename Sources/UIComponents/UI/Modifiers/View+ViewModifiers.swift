@@ -7,7 +7,7 @@ struct CardBackground: ViewModifier {
 
 	func body(content: Content) -> some View {
 		content
-			.padding([.leading, .trailing, .top, .bottom])
+			.padding()
 			.background(self.color)
 			.cornerRadius(12)
 	}

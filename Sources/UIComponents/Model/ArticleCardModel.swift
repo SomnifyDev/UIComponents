@@ -8,11 +8,11 @@ public struct ArticleCardModel {
 
     public init(
         title: String,
-        description: String,
+        subtitle: String,
         coverImage: Image
     ) {
         self.title = title
-        self.subtitle = description
+        self.subtitle = subtitle
         self.coverImage = coverImage
     }
 

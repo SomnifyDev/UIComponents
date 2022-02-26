@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct ArticleCardView<Content: View>: View {
+public struct ArticleCardView: View {
 
     // MARK: - Private properties
 
@@ -18,27 +18,26 @@ public struct ArticleCardView<Content: View>: View {
                     card.coverImage
                         .resizable()
                         .frame(height: 235)
-                    VStack(spacing: 16) {
-                        HStack {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 16) {
                             Text(card.title)
                                 .fontWeight(.bold)
                                 .font(.title2)
-                            Spacer()
-                        }
-                        HStack {
                             Text(card.subtitle)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .font(.none)
-                            Spacer()
                         }
+                        Spacer()
                     }
                     .padding()
                     Spacer()
                 }
-                .cornerRadius(10)
+                .contentShape(Rectangle())
             }
         )
         .buttonStyle(PlainButtonStyle())
+        .background(ColorsRepository.Card.cardBackground)
+        .cornerRadius(10)
     }
 
     // MARK: - Init
