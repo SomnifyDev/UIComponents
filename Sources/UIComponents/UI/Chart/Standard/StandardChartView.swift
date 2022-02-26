@@ -137,7 +137,7 @@ public struct StandardChartView: View {
         switch chartType {
         case .phasesChart:
             return StandardChartElementView(
-                viewModel: StandardChartElementViewModel(
+                chartElement: StandardChartElementModel(
                     width: elemWidth,
                     height: height,
                     type: .rectangular(color: getPhaseColor(for: value))
@@ -145,7 +145,7 @@ public struct StandardChartView: View {
             )
         case .defaultChart(let barType, _):
             return StandardChartElementView(
-                viewModel: StandardChartElementViewModel(
+                chartElement: StandardChartElementModel(
                     width: elemWidth,
                     height: height,
                     type: barType
@@ -153,7 +153,7 @@ public struct StandardChartView: View {
             )
         case let .verticalProgress(foregroundElementColor, backgroundElementColor, max):
             return StandardChartElementView(
-                viewModel: StandardChartElementViewModel(
+                chartElement: StandardChartElementModel(
                     width: elemWidth,
                     height: chartHeight,
                     type: .rectangularFilled(

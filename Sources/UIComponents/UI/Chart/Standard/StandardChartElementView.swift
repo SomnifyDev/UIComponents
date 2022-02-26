@@ -8,7 +8,7 @@ typealias ChartType = StandardChartType.ChartType
 
 // MARK: - StandardChartElementViewModel
 
-struct StandardChartElementViewModel {
+struct StandardChartElementModel {
 
     // MARK: - Properties
 
@@ -37,42 +37,42 @@ struct StandardChartElementView: View {
 
     // MARK: - Private properties
 
-    private let viewModel: StandardChartElementViewModel
+    private let chartElement: StandardChartElementModel
 
     // MARK: - Internal properties
 
     var body: some View {
         VStack {
-            switch viewModel.type {
+            switch chartElement.type {
             case let .rectangular(color):
                 RectangularChartElementView(
                     color: color,
-                    cornerRadius: viewModel.cornerRadius
+                    cornerRadius: chartElement.cornerRadius
                 )
 
             case let .circular(color):
                 CircularChartElementView(
                     color: color,
-                    size: viewModel.width
+                    size: chartElement.width
                 )
 
             case let .rectangularFilled(foregroundElementColor, backgroundElementColor, percentage):
                 RectangularFilledChartElementView(
                     backgroundElementColor: backgroundElementColor,
                     foregroundElementColor: foregroundElementColor,
-                    height: viewModel.height,
+                    height: chartElement.height,
                     percentage: percentage,
-                    cornerRadius: viewModel.cornerRadius
+                    cornerRadius: chartElement.cornerRadius
                 )
             }
         }
-        .frame(width: viewModel.width, height: viewModel.height)
+        .frame(width: chartElement.width, height: chartElement.height)
     }
 
     // MARK: - Init
 
-    init(viewModel: StandardChartElementViewModel) {
-        self.viewModel = viewModel
+    init(chartElement: StandardChartElementModel) {
+        self.chartElement = chartElement
     }
 
 }

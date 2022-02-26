@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct CardHeaderModel {
+public struct StandardCardHeaderModel {
     
     let leadIcon: Image
     let title: String

@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct ProgressChartModel {
 
-    let cardHeaderModel: CardHeaderModel
+    let cardHeaderModel: StandardCardHeaderModel
     let description: String
     let beforeProgressViewModel: ProgressChartElementModel
     let currentProgressViewModel: ProgressChartElementModel
@@ -14,7 +14,7 @@ public struct ProgressChartModel {
     }
 
     public init(
-        cardHeaderModel: CardHeaderModel,
+        cardHeaderModel: StandardCardHeaderModel,
         description: String,
         beforeProgressViewModel: ProgressChartElementModel,
         currentProgressViewModel: ProgressChartElementModel

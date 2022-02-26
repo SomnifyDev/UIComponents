@@ -9,7 +9,7 @@ public struct InfoCellCollectionView: View {
     // MARK: - Public properties
 
     public var body: some View {
-        VStack(spacing: -8) {
+        VStack(spacing: 8) {
             ForEach(collection.cells, id: \.title) { viewModel in
                 InfoCell(info: viewModel)
             }

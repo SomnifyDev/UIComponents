@@ -12,7 +12,7 @@ public struct ProgressChartView: View {
 
     public var body: some View {
         VStack(alignment: .leading) {
-            CardHeaderView(cardHeader: viewModel.cardHeaderModel)
+            StandardCardHeaderView(cardHeader: viewModel.cardHeaderModel)
 
             ProgressElementView(with: viewModel.currentProgressViewModel)
                 .padding(.top, 8)
@@ -24,7 +24,7 @@ public struct ProgressChartView: View {
                 .padding(.trailing, viewModel.beforeTrailingPaddingValue)
                 .foregroundColor(ColorsRepository.General.mainSleepy.opacity(0.5))
 
-            CardBottomSimpleDescriptionView(description: viewModel.description)
+            StandardCardBottomSimpleDescriptionView(description: viewModel.description)
         }
         .frame(minHeight: 0)
     }

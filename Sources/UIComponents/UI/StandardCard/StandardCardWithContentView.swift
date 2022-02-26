@@ -2,18 +2,18 @@
 
 import SwiftUI
 
-public struct CardWithContentView<Content: View>: View {
+public struct StandardCardWithContentView<Content: View>: View {
 
     // MARK: - Private properties
 
-    private let cardHeader: CardHeaderModel
+    private let cardHeader: StandardCardHeaderModel
     private let content: () -> Content
 
     // MARK: - Public properties
 
     public var body: some View {
         VStack(alignment: .leading) {
-            CardHeaderView(cardHeader: cardHeader)
+            StandardCardHeaderView(cardHeader: cardHeader)
             content()
         }
         .roundedCardBackground(color: ColorsRepository.Card.cardBackground)
@@ -22,7 +22,7 @@ public struct CardWithContentView<Content: View>: View {
     // MARK: - Init
 
     public init(
-        cardHeader: CardHeaderModel,
+        cardHeader: StandardCardHeaderModel,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.cardHeader = cardHeader

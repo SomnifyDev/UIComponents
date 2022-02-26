@@ -10,7 +10,7 @@ public struct BannerView<Content: View>: View {
     // MARK: - Public properties
 
     public var body: some View {
-        CardWithContentView(cardHeader: banner.cardHeaderModel) {
+        StandardCardWithContentView(cardHeader: banner.cardHeader) {
             content()
         }
     }

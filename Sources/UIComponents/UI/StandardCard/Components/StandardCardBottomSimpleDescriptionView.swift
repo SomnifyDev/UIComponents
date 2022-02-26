@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-public struct CardBottomSimpleDescriptionView: View {
+public struct StandardCardBottomSimpleDescriptionView: View {
 
     // MARK: - Private properties
 

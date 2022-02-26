@@ -1,10 +1,10 @@
 import SwiftUI
 
-public struct CardHeaderView: View {
+public struct StandardCardHeaderView: View {
 
     // MARK: - Private properties
 
-    private let cardHeader: CardHeaderModel
+    private let cardHeader: StandardCardHeaderModel
 
     // MARK: - Public properties
 
@@ -49,7 +49,7 @@ public struct CardHeaderView: View {
     // MARK: - Init
 
     public init(
-        cardHeader: CardHeaderModel
+        cardHeader: StandardCardHeaderModel
     ) {
         self.cardHeader = cardHeader
     }
