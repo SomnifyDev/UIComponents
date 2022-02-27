@@ -6,31 +6,6 @@ import SwiftUI
 
 typealias ChartType = StandardChartType.ChartType
 
-// MARK: - StandardChartElementViewModel
-
-struct StandardChartElementModel {
-
-    // MARK: - Properties
-
-    let cornerRadius: Double = 50
-    let width: CGFloat
-    let height: CGFloat
-    let type: ChartType
-
-    // MARK: - Init
-
-    init(
-        width: CGFloat,
-        height: CGFloat,
-        type: ChartType
-    ) {
-        self.width = width
-        self.height = height
-        self.type = type
-    }
-
-}
-
 // MARK: - StandardChartElementView
 
 struct StandardChartElementView: View {

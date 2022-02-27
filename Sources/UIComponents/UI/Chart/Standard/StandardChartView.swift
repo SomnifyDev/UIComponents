@@ -2,67 +2,38 @@
 
 import SwiftUI
 
-public enum StandardChartType {
-    case phasesChart
-    case defaultChart(barType: ChartType, stringFormatter: String = "%.1f")
-    case verticalProgress(foregroundElementColor: Color, backgroundElementColor: Color, max: Double)
-
-    public enum ChartType {
-        case rectangular(color: Color)
-        case rectangularFilled(foregroundElementColor: Color, backgroundElementColor: Color, fillPercentage: Double)
-        case circular(color: Color)
-    }
-}
-
-public struct ChartPointDisplayItem {
-    public let date: Date
-    public let value: Double
-
-    public init(date: Date, value: Double) {
-        self.date = date
-        self.value = value
-    }
-}
-
 public struct StandardChartView: View {
-    enum Constants {
+
+    // MARK: - Private types
+
+    private enum Constant {
         static let descriptionHeight: CGFloat = 13
         static let standardWidth: CGFloat = 14
         static let tapDescriptionHeight: CGFloat = 16
         static let stackSpacing: CGFloat = 4
     }
 
+    // MARK: - Private properties
+
     @State private var selectedIndex = -1
     @State private var elemWidth: CGFloat = 14
     @State private var chartSpacing: CGFloat = 3
 
     private let chartType: StandardChartType
-    private let points: [ChartPointDisplayItem]
+    private let points: [ChartPointModel]
     private let chartHeight: CGFloat
     private let timeLineType: OXChartLineType
     private let dragGestureEnabled: Bool
 
-    public init(
-        chartType: StandardChartType,
-        points: [ChartPointDisplayItem],
-        chartHeight: CGFloat,
-        timeLineType: OXChartLineType,
-        dragGestureEnabled: Bool = true
-    ) {
-        self.chartType = chartType
-        self.points = points
-        self.chartHeight = chartHeight
-        self.timeLineType = timeLineType
-        self.dragGestureEnabled = dragGestureEnabled
-    }
+    // MARK: - Public properties
 
     public var body: some View {
         GeometryReader { geometry in
-            VStack(alignment: .center, spacing: Constants.stackSpacing) {
+            VStack(alignment: .center, spacing: Constant.stackSpacing) {
 
                 if self.dragGestureEnabled {
                     Text(self.selectedIndex >= 0 ? self.getTapDescription(for: self.selectedIndex) : "")
-                        .frame(height: Constants.tapDescriptionHeight)
+                        .frame(height: Constant.tapDescriptionHeight)
                 }
 
                 Spacer()
@@ -112,7 +83,7 @@ public struct StandardChartView: View {
                 OXChartLineView(chartLineType: self.timeLineType)
             }
             .onAppear {
-                let chartWidth = CGFloat(points.count) * Constants.standardWidth + self.chartSpacing * CGFloat(points.count - 1)
+                let chartWidth = CGFloat(points.count) * Constant.standardWidth + self.chartSpacing * CGFloat(points.count - 1)
                 if chartWidth > geometry.size.width {
                     self.elemWidth = abs(geometry.size.width - self.chartSpacing * CGFloat(points.count - 1)) / CGFloat(points.count)
                 }
@@ -127,6 +98,24 @@ public struct StandardChartView: View {
         }
         .frame(height: chartHeight + (self.timeLineType.isOXLineNeeded ? 30 : 0) + (self.timeLineType.isTimeLineNeeded ? 30 : 0) + (dragGestureEnabled ? 16 : 0))
     }
+
+    // MARK: - Init
+
+    public init(
+        chartType: StandardChartType,
+        points: [ChartPointModel],
+        chartHeight: CGFloat,
+        timeLineType: OXChartLineType,
+        dragGestureEnabled: Bool = true
+    ) {
+        self.chartType = chartType
+        self.points = points
+        self.chartHeight = chartHeight
+        self.timeLineType = timeLineType
+        self.dragGestureEnabled = dragGestureEnabled
+    }
+
+    // MARK: - Private methods
 
     private func getChartElement(value: Double) -> some View {
         let minimum = self.points.map{ $0.value}.min() ?? 0
