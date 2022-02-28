@@ -3,7 +3,7 @@ import SwiftUI
 public struct StatisticalIndicatorCardView: View {
 
     private let indicatorCard: StatisticalIndicatorCardModel
-    private let onQuestionMarkTapAction: OptionalActionHandler
+    private let onQuestionMarkTapAction: ActionHandler?
 
     public var body: some View {
         VStack(spacing: 4) {
@@ -18,7 +18,7 @@ public struct StatisticalIndicatorCardView: View {
                     Button {
                         action()
                     } label: {
-                        Image(systemName: "questionmark.circle")
+                        IconsRepository.questionMarkCircle
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
@@ -53,7 +53,7 @@ public struct StatisticalIndicatorCardView: View {
 
     public init(
         indicatorCard: StatisticalIndicatorCardModel,
-        onQuestionMarkTapAction: OptionalActionHandler
+        onQuestionMarkTapAction: ActionHandler?
     ) {
         self.indicatorCard = indicatorCard
         self.onQuestionMarkTapAction = onQuestionMarkTapAction

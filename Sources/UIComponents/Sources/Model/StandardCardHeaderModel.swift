@@ -6,7 +6,7 @@ public struct StandardCardHeaderModel {
     let title: String
     let titleColor: Color
     let trailIcon: Image?
-    let trailIconAction: OptionalActionHandler
+    let trailIconAction: ActionHandler?
     let trailText: String?
     let description: String?
     let descriptionColor: Color?
@@ -17,7 +17,7 @@ public struct StandardCardHeaderModel {
         title: String,
         titleColor: Color,
         trailIcon: Image?,
-        trailIconAction: OptionalActionHandler,
+        trailIconAction: ActionHandler?,
         trailText: String?,
         description: String?,
         descriptionColor: Color?,
