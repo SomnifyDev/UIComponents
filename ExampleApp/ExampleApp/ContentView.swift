@@ -6,6 +6,18 @@ import UIComponents
  Мб в будущем будет смысл как-то порефакторить и тут, но пока не вижу его
  */
 
+struct GreenRectangleViewFactory: ViewFactory {
+    func build(with element: ContentDashboardSectionElement) -> some View {
+        return Rectangle().foregroundColor(.green).frame(height: 50).frame(maxWidth: .infinity)
+    }
+}
+
+struct RedRectangleViewFactory: ViewFactory {
+    func build(with element: ContentDashboardSectionElement) -> some View {
+        return Rectangle().foregroundColor(.red).frame(height: 50).frame(maxWidth: .infinity)
+    }
+}
+
 struct ContentView: View {
     var body: some View {
         ZStack {
@@ -14,6 +26,43 @@ struct ContentView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     Group {
+
+                        // MARK: - ContentDashboard
+
+                        ContentDashboard(
+                            registry: [
+                                "green_rectangle": GreenRectangleViewFactory(),
+                                "red_rectangle": RedRectangleViewFactory()
+                            ],
+                            sections: [
+                                ContentDashboardSection(
+                                    name: "Section 1",
+                                    elements: [
+                                        ContentDashboardSectionElement(
+                                            type: "green_rectangle",
+                                            payload: []
+                                        ),
+                                        ContentDashboardSectionElement(
+                                            type: "red_rectangle",
+                                            payload: []
+                                        )
+                                    ]
+                                ),
+                                ContentDashboardSection(
+                                    name: "Section 2",
+                                    elements: [
+                                        ContentDashboardSectionElement(
+                                            type: "red_rectangle",
+                                            payload: []
+                                        ),
+                                        ContentDashboardSectionElement(
+                                            type: "green_rectangle",
+                                            payload: []
+                                        )
+                                    ]
+                                ),
+                            ]
+                        )
 
                         // MARK: - Banner
 
@@ -101,15 +150,15 @@ struct ContentView: View {
                         }
                         .padding(.top)
 
-                        ArticleCardView(
-                            card: ArticleCardModel(
-                                title: "Title",
-                                subtitle: "Subtitle",
-                                coverImage: Image("moscow")
-                            )
-                        ) {
-                            print("Article tapped!")
-                        }
+//                        ArticleCardView(
+//                            card: ArticleCardModel(
+//                                title: "Title",
+//                                subtitle: "Subtitle",
+//                                coverImage: Image("moscow")
+//                            )
+//                        ) {
+//                            print("Article tapped!")
+//                        }
                     }
 
                     Spacer()
