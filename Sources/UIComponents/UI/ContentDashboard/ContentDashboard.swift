@@ -16,8 +16,7 @@ public struct ContentDashboard: View {
                     ContentSectionView(sectionName: section.name) {
                         VStack(spacing: 8) {
                             ForEach(section.elements) { element in
-                                let factory = registry[element.type] as! ViewFactory
-                                factory.internalBuild(with: element)
+                                (registry[element.type] as! ViewFactory).internalBuild(with: element)
                             }
                         }
                     }
