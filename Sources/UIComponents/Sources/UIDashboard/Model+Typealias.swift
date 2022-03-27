@@ -6,7 +6,7 @@ public typealias SectionName = String
 public typealias UIDashboardSectionElementTypeIdentifier = String
 public typealias ContentDashboardRegistry = [UIDashboardSectionElementTypeIdentifier: Any]
 
-// MARK: - ContentDashboardSection
+// MARK: - UIDashboardSection
 
 public struct UIDashboardSection: Identifiable {
 
@@ -24,7 +24,7 @@ public struct UIDashboardSection: Identifiable {
 
 }
 
-// MARK: - ContentDashboardSectionElement
+// MARK: - UIDashboardSectionElement
 
 public struct UIDashboardSectionElement: Identifiable {
 
@@ -42,7 +42,7 @@ public struct UIDashboardSectionElement: Identifiable {
 
 }
 
-// MARK: - ContentDashboardSkeleton
+// MARK: - UIDashboardContent
 
 public struct UIDashboardContent {
 
@@ -59,7 +59,7 @@ public struct UIDashboardContent {
 
 }
 
-// MARK: - UIProviderRepresentableViewContent
+// MARK: - UIProviderRepresentableContent
 
 public struct UIProviderRepresentableContent {
 

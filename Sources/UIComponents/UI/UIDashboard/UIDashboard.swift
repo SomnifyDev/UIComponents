@@ -1,5 +1,7 @@
 import SwiftUI
 
+// MARK: - UIDashboard
+
 public struct UIDashboard: View {
 
     // MARK: - Private properties
@@ -12,7 +14,7 @@ public struct UIDashboard: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 32) {
                 ForEach(content.sections) { section in
-                    ContentSectionView(sectionName: section.name) {
+                    UIDashboardSectionView(sectionName: section.name) {
                         VStack(spacing: 8) {
                             ForEach(section.elements) { element in
                                 (content.registry[element.type] as! ViewFactory).internalBuild(with: element)
@@ -32,9 +34,9 @@ public struct UIDashboard: View {
 
 }
 
-// MARK: - ContentSectionView
+// MARK: - UIDashboardSectionView
 
-struct ContentSectionView<Content: View>: View {
+struct UIDashboardSectionView<Content: View>: View {
 
     let sectionName: String
     @ViewBuilder let content: () -> Content
