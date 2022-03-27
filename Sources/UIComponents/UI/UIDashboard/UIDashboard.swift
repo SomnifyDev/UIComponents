@@ -1,21 +1,21 @@
 import SwiftUI
 
-public struct ContentDashboard: View {
+public struct UIDashboard: View {
 
     // MARK: - Private properties
 
-    private let basis: ContentDashboardBasis
+    private let content: UIDashboardContent
 
     // MARK: - Public properties
 
     public var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 32) {
-                ForEach(basis.sections) { section in
+                ForEach(content.sections) { section in
                     ContentSectionView(sectionName: section.name) {
                         VStack(spacing: 8) {
                             ForEach(section.elements) { element in
-                                (basis.registry[element.type] as! ViewFactory).internalBuild(with: element)
+                                (content.registry[element.type] as! ViewFactory).internalBuild(with: element)
                             }
                         }
                     }
@@ -26,8 +26,8 @@ public struct ContentDashboard: View {
 
     // MARK: - Init
 
-    public init(basis: ContentDashboardBasis) {
-        self.basis = basis
+    public init(content: UIDashboardContent) {
+        self.content = content
     }
 
 }
