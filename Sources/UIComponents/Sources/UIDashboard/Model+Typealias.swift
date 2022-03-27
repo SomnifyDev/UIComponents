@@ -46,11 +46,11 @@ public struct UIDashboardSectionElement: Identifiable {
 
 public struct UIDashboardContent {
 
-    public let registry: [UIDashboardSectionElementTypeIdentifier: Any]
+    public let registry: ContentDashboardRegistry
     public let sections: [UIDashboardSection]
 
     public init(
-        registry: [UIDashboardSectionElementTypeIdentifier: Any],
+        registry: ContentDashboardRegistry,
         sections: [UIDashboardSection]
     ) {
         self.registry = registry
