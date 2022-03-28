@@ -10,7 +10,7 @@ public struct InfoCellCollectionView: View {
 
     public var body: some View {
         VStack(spacing: 8) {
-            ForEach(collection.cells, id: \.title) { viewModel in
+            ForEach(collection.cells, id: \.id) { viewModel in
                 InfoCell(info: viewModel)
             }
         }
