@@ -1,22 +1,23 @@
 import SwiftUI
 
-public struct ContentDashboard: View {
+// MARK: - UIDashboard
+
+public struct UIDashboard: View {
 
     // MARK: - Private properties
 
-    private let sections: [ContentDashboardSection]
-    private let registry: [ContentDashboardSectionElementTypeIdentifier: Any]
+    private let content: UIDashboardContent
 
     // MARK: - Public properties
 
     public var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 32) {
-                ForEach(sections) { section in
-                    ContentSectionView(sectionName: section.name) {
+                ForEach(content.sections) { section in
+                    UIDashboardSectionView(sectionName: section.name) {
                         VStack(spacing: 8) {
                             ForEach(section.elements) { element in
-                                (registry[element.type] as! ViewFactory).internalBuild(with: element)
+                                (content.registry[element.type] as! ViewFactory).internalBuild(with: element)
                             }
                         }
                     }
@@ -27,19 +28,15 @@ public struct ContentDashboard: View {
 
     // MARK: - Init
 
-    public init(
-        registry: [ContentDashboardSectionElementTypeIdentifier: Any],
-        sections: [ContentDashboardSection]
-    ) {
-        self.registry = registry
-        self.sections = sections
+    public init(content: UIDashboardContent) {
+        self.content = content
     }
 
 }
 
-// MARK: - ContentSectionView
+// MARK: - UIDashboardSectionView
 
-struct ContentSectionView<Content: View>: View {
+struct UIDashboardSectionView<Content: View>: View {
 
     let sectionName: String
     @ViewBuilder let content: () -> Content
