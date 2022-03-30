@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-public struct InfoCellModel {
+public struct BasicCellModel {
     public struct LabelConfiguration {
         let title: String
         let font: Font?
@@ -16,12 +16,12 @@ public struct InfoCellModel {
     }
 
     public struct ImageConfiguration {
-        let systemImage: String
+        let image: Image
         let font: Font?
         let color: Color?
 
-        public init(systemImage: String, font: Font?, color: Color?) {
-            self.systemImage = systemImage
+        public init(image: Image, font: Font?, color: Color?) {
+            self.image = image
             self.font = font
             self.color = color
         }
