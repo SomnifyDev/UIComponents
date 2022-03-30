@@ -3,6 +3,7 @@ import UIKit
 import SwiftUI
 
 public struct BasicCellModel {
+
     let id: UUID = UUID()
     let leadingSystemImageConfiguration: BasicCellImageModel
     let titleConfiguration: BasicCellLabelModel
@@ -24,6 +25,7 @@ public struct BasicCellModel {
 }
 
 public struct BasicCellLabelModel {
+
     let title: String
     let font: Font?
     let color: Color?
@@ -33,9 +35,11 @@ public struct BasicCellLabelModel {
         self.font = font
         self.color = color
     }
+
 }
 
 public struct BasicCellImageModel {
+
     let image: Image
     let font: Font?
     let color: Color?
@@ -45,4 +49,5 @@ public struct BasicCellImageModel {
         self.font = font
         self.color = color
     }
+    
 }
