@@ -4,22 +4,22 @@ public struct BasicCellCollectionView: View {
 
     // MARK: - Private properties
 
-    private let collection: BasicCellCollectionModel
+    private let model: BasicCellCollectionModel
 
     // MARK: - Public properties
 
     public var body: some View {
         VStack(spacing: 8) {
-            ForEach(collection.cells, id: \.id) { viewModel in
-                BasicCell(info: viewModel)
+            ForEach(self.model.cells, id: \.id) { viewModel in
+                BasicCell(model: viewModel)
             }
         }
     }
 
     // MARK: - Init
 
-    public init(collection: BasicCellCollectionModel) {
-        self.collection = collection
+    public init(model: BasicCellCollectionModel) {
+        self.model = model
     }
 
 }

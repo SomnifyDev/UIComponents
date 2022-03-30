@@ -5,32 +5,32 @@ public struct BasicCell: View {
 
     // MARK: - Private properties
 
-    private let info: BasicCellModel
+    private let model: BasicCellModel
 
     // MARK: - Public properties
 
     public var body: some View {
         HStack {
-            BasicCellImage(configuration: info.leadingSystemImageConfiguration)
+            BasicCellImage(model: self.model.leadingSystemImageConfiguration)
 
             VStack(alignment: .leading) {
-                BasicCellTitle(configuration: info.titleConfiguration)
+                BasicCellTitle(model: self.model.titleConfiguration)
 
-                if let subtitleConfiguration = info.subtitleConfiguration {
-                    BasicCellTitle(configuration: subtitleConfiguration)
+                if let subtitleConfiguration = self.model.subtitleConfiguration {
+                    BasicCellTitle(model: subtitleConfiguration)
                 }
             }
 
             Spacer()
 
-            if let trailingConfiguration = info.trailingConfiguration {
+            if let trailingConfiguration = self.model.trailingConfiguration {
                 HStack {
                     if let trailingLabelConfiguration = trailingConfiguration.0 {
-                        BasicCellTitle(configuration: trailingLabelConfiguration)
+                        BasicCellTitle(model: trailingLabelConfiguration)
                     }
 
                     if let trailingImageConfiguration = trailingConfiguration.1 {
-                        BasicCellImage(configuration: trailingImageConfiguration)
+                        BasicCellImage(model: trailingImageConfiguration)
                     }
                 }
             }
@@ -44,53 +44,8 @@ public struct BasicCell: View {
 
     // MARK: - Init
 
-    public init(info: BasicCellModel) {
-        self.info = info
+    public init(model: BasicCellModel) {
+        self.model = model
     }
     
-}
-
-public struct BasicCellTitle: View {
-
-    // MARK: - Private properties
-
-    private let configuration: BasicCellModel.LabelConfiguration
-
-    // MARK: - Public properties
-
-    public var body: some View {
-        Text(configuration.title)
-            .lineLimit(1)
-            .font(configuration.font)
-            .foregroundColor(configuration.color)
-    }
-
-    // MARK: - Init
-
-    public init(configuration: BasicCellModel.LabelConfiguration) {
-        self.configuration = configuration
-    }
-
-}
-
-public struct BasicCellImage: View {
-
-    // MARK: - Private properties
-
-    private let configuration: BasicCellModel.ImageConfiguration
-
-    // MARK: - Public properties
-
-    public var body: some View {
-        configuration.image
-            .font(configuration.font)
-            .foregroundColor(configuration.color)
-    }
-
-    // MARK: - Init
-
-    public init(configuration: BasicCellModel.ImageConfiguration) {
-        self.configuration = configuration
-    }
-
 }
