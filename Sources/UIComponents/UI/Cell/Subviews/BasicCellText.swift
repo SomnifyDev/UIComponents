@@ -1,10 +1,10 @@
 import SwiftUI
 
-public struct BasicCellTitle: View {
+public struct BasicCellText: View {
     
     // MARK: - Private properties
 
-    private let model: BasicCellLabelModel
+    private let model: BasicCellTextModel
 
     // MARK: - Public properties
 
@@ -17,7 +17,7 @@ public struct BasicCellTitle: View {
 
     // MARK: - Init
 
-    public init(model: BasicCellLabelModel) {
+    public init(model: BasicCellTextModel) {
         self.model = model
     }
 

@@ -2,29 +2,31 @@ import Foundation
 import UIKit
 import SwiftUI
 
+public typealias BasicCellTrailingItemModel = (labelModel: BasicCellTextModel?, imageModel: BasicCellImageModel?)?
+
 public struct BasicCellModel {
 
     let id: UUID = UUID()
-    let leadingSystemImageConfiguration: BasicCellImageModel
-    let titleConfiguration: BasicCellLabelModel
-    let subtitleConfiguration: BasicCellLabelModel?
-    let trailingConfiguration: (labelConfiguration: BasicCellLabelModel?, imageConfiguration: BasicCellImageModel?)?
+    let leadingSystemImageModel: BasicCellImageModel
+    let titleModel: BasicCellTextModel
+    let subtitleModel: BasicCellTextModel?
+    let trailingItemModel: BasicCellTrailingItemModel
 
     public init(
-        leadingSystemImageConfiguration: BasicCellImageModel,
-        titleConfiguration: BasicCellLabelModel,
-        subtitleConfiguration: BasicCellLabelModel?,
-        trailingConfiguration: (labelConfiguration: BasicCellLabelModel?, imageConfiguration: BasicCellImageModel?)?
+        leadingSystemImageModel: BasicCellImageModel,
+        titleModel: BasicCellTextModel,
+        subtitleModel: BasicCellTextModel?,
+        trailingItemModel: BasicCellTrailingItemModel
     ) {
-        self.leadingSystemImageConfiguration = leadingSystemImageConfiguration
-        self.titleConfiguration = titleConfiguration
-        self.subtitleConfiguration = subtitleConfiguration
-        self.trailingConfiguration = trailingConfiguration
+        self.leadingSystemImageModel = leadingSystemImageModel
+        self.titleModel = titleModel
+        self.subtitleModel = subtitleModel
+        self.trailingItemModel = trailingItemModel
     }
 
 }
 
-public struct BasicCellLabelModel {
+public struct BasicCellTextModel {
 
     let title: String
     let font: Font?

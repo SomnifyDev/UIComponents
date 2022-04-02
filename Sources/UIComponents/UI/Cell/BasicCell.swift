@@ -11,26 +11,26 @@ public struct BasicCell: View {
 
     public var body: some View {
         HStack {
-            BasicCellImage(model: self.model.leadingSystemImageConfiguration)
+            BasicCellImage(model: self.model.leadingSystemImageModel)
 
             VStack(alignment: .leading) {
-                BasicCellTitle(model: self.model.titleConfiguration)
+                BasicCellText(model: self.model.titleModel)
 
-                if let subtitleConfiguration = self.model.subtitleConfiguration {
-                    BasicCellTitle(model: subtitleConfiguration)
+                if let subtitleModel = self.model.subtitleModel {
+                    BasicCellText(model: subtitleModel)
                 }
             }
 
             Spacer()
 
-            if let trailingConfiguration = self.model.trailingConfiguration {
+            if let trailingItemModel = self.model.trailingItemModel {
                 HStack {
-                    if let trailingLabelConfiguration = trailingConfiguration.0 {
-                        BasicCellTitle(model: trailingLabelConfiguration)
+                    if let trailingLabelModel = trailingItemModel.0 {
+                        BasicCellText(model: trailingLabelModel)
                     }
 
-                    if let trailingImageConfiguration = trailingConfiguration.1 {
-                        BasicCellImage(model: trailingImageConfiguration)
+                    if let trailingImageModel = trailingItemModel.1 {
+                        BasicCellImage(model: trailingImageModel)
                     }
                 }
             }
