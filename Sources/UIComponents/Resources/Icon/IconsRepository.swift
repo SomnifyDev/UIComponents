@@ -17,5 +17,7 @@ public enum IconsRepository {
     public static let article = Image(systemName: "heart.text.square")
     public static let questionMark = Image(systemName: "questionmark.square.dashed")
     public static let questionMarkCircle = Image(systemName: "questionmark.circle")
+    public static let mapPin = Image(systemName: "mappin.circle.fill")
+    public static let walkingFigure = Image(systemName: "figure.walk.circle.fill")
     
 }
