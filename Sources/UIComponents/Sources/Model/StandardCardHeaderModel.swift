@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct StandardCardHeaderModel {
     
-    let leadIcon: Image
+    let leadIcon: Image?
     let title: String
     let titleColor: Color
     let trailIcon: Image?
@@ -13,7 +13,7 @@ public struct StandardCardHeaderModel {
     let shouldShowSeparator: Bool
 
     public init(
-        leadIcon: Image,
+        leadIcon: Image?,
         title: String,
         titleColor: Color,
         trailIcon: Image?,
@@ -36,7 +36,7 @@ public struct StandardCardHeaderModel {
 
     /* Convenience init */
     public init(
-        leadIcon: Image,
+        leadIcon: Image?,
         title: String,
         titleColor: Color,
         shouldShowSeparator: Bool
