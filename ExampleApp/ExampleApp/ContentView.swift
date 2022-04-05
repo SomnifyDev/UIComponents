@@ -6,18 +6,6 @@ import UIComponents
  Мб в будущем будет смысл как-то порефакторить и тут, но пока не вижу его
  */
 
-struct GreenRectangleViewFactory: ViewFactory {
-    func build(with element: ContentDashboardSectionElement) -> some View {
-        return Rectangle().foregroundColor(.green).frame(height: 50).frame(maxWidth: .infinity)
-    }
-}
-
-struct RedRectangleViewFactory: ViewFactory {
-    func build(with element: ContentDashboardSectionElement) -> some View {
-        return Rectangle().foregroundColor(.red).frame(height: 50).frame(maxWidth: .infinity)
-    }
-}
-
 struct ContentView: View {
     var body: some View {
         ZStack {
@@ -26,43 +14,54 @@ struct ContentView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     Group {
+                        HStack {
+                            Text("Chart").font(.title.bold())
+                            Spacer()
+                        }
+                        .padding(.top)
 
-                        // MARK: - ContentDashboard
-
-                        ContentDashboard(
-                            registry: [
-                                "green_rectangle": GreenRectangleViewFactory(),
-                                "red_rectangle": RedRectangleViewFactory()
-                            ],
-                            sections: [
-                                ContentDashboardSection(
-                                    name: "Section 1",
-                                    elements: [
-                                        ContentDashboardSectionElement(
-                                            type: "green_rectangle",
-                                            payload: []
-                                        ),
-                                        ContentDashboardSectionElement(
-                                            type: "red_rectangle",
-                                            payload: []
-                                        )
-                                    ]
-                                ),
-                                ContentDashboardSection(
-                                    name: "Section 2",
-                                    elements: [
-                                        ContentDashboardSectionElement(
-                                            type: "red_rectangle",
-                                            payload: []
-                                        ),
-                                        ContentDashboardSectionElement(
-                                            type: "green_rectangle",
-                                            payload: []
-                                        )
-                                    ]
-                                ),
-                            ]
-                        )
+                        StandardCardWithContentView(
+                            cardHeader: .init(leadIcon: nil, title: "Title", titleColor: .black, shouldShowSeparator: true)
+                        ) {
+                            StandardChartView(
+                                model: .init(
+                                    chartType: .defaultChart(barType: .rectangular(color: .red)),
+                                    points: [
+                                        ChartPointModel(date: .now, value: 1),
+                                        ChartPointModel(date: .now, value: 4),
+                                        ChartPointModel(date: .now, value: 5),
+                                        ChartPointModel(date: .now, value: 4),
+                                        ChartPointModel(date: .now, value: 5),
+                                        ChartPointModel(date: .now, value: 6),
+                                        ChartPointModel(date: .now, value: 2),
+                                        ChartPointModel(date: .now, value: 3),
+                                        ChartPointModel(date: .now, value: 4),
+                                        ChartPointModel(date: .now, value: 5),
+                                        ChartPointModel(date: .now, value: 6),
+                                        ChartPointModel(date: .now, value: 7),
+                                        ChartPointModel(date: .now, value: 8),
+                                        ChartPointModel(date: .now, value: 6),
+                                        ChartPointModel(date: .now, value: 7),
+                                        ChartPointModel(date: .now, value: 8),
+                                        ChartPointModel(date: .now, value: 9),
+                                        ChartPointModel(date: .now, value: 5),
+                                        ChartPointModel(date: .now, value: 6),
+                                        ChartPointModel(date: .now, value: 7),
+                                        ChartPointModel(date: .now, value: 8),
+                                        ChartPointModel(date: .now, value: 6),
+                                        ChartPointModel(date: .now, value: 7),
+                                        ChartPointModel(date: .now, value: 8),
+                                        ChartPointModel(date: .now, value: 9),
+                                        ChartPointModel(date: .now, value: 10),
+                                        ChartPointModel(date: .now, value: 11)
+                                    ],
+                                    chartHeight: 70,
+                                    timeLineType: .none,
+                                    dragGestureEnabled: false
+                                )
+                            )
+                            .padding(.vertical)
+                        }
 
                         // MARK: - Banner
 
@@ -70,7 +69,6 @@ struct ContentView: View {
                             Text("Banner").font(.title.bold())
                             Spacer()
                         }
-                        .padding(.top)
 
                         BannerView(
                             banner: BannerModel(
@@ -86,27 +84,6 @@ struct ContentView: View {
                             Text("This is my awesome banner's content!")
                         }
 
-                        // MARK: - Information cell
-
-                        HStack {
-                            Text("Information cell").font(.title.bold())
-                            Spacer()
-                        }
-                        .padding(.top)
-
-                        InfoCell(info: InfoCellModel(title: "Single cell", value: "value"))
-
-                        InfoCellCollectionView(
-                            collection: InfoCellCollectionModel(
-                                cells: [
-                                    InfoCellModel(title: "Collection cell 1", value: "value"),
-                                    InfoCellModel(title: "Collection cell 2", value: "value"),
-                                    InfoCellModel(title: "Collection cell 3", value: "value"),
-                                    InfoCellModel(title: "Collection cell 4", value: "value")
-                                ]
-                            )
-                        )
-
                         // MARK: - Cards
 
                         HStack {
@@ -120,11 +97,11 @@ struct ContentView: View {
                                 indicator: IndicatorModel(
                                     name: "IndicatorName",
                                     currentValue: 0.0,
-                                    expectedValueRange: 0...1,
                                     unit: "unit"
                                 ),
                                 description: "Description",
-                                feedback: "Feedback"
+                                feedback: "Feedback",
+                                isPositive: true
                             ),
                             onQuestionMarkTapAction: {
                                 print("Question mark tapped!")
