@@ -1,5 +1,31 @@
 import SwiftUI
 
+// MARK: - StandardChartModel
+
+public struct StandardChartModel {
+
+    let chartType: StandardChartType
+    let points: [ChartPointModel]
+    let chartHeight: CGFloat
+    let timeLineType: OXChartLineType
+    let dragGestureEnabled: Bool
+
+    public init(
+        chartType: StandardChartType,
+        points: [ChartPointModel],
+        chartHeight: CGFloat,
+        timeLineType: OXChartLineType,
+        dragGestureEnabled: Bool
+    ) {
+        self.chartType = chartType
+        self.points = points
+        self.chartHeight = chartHeight
+        self.timeLineType = timeLineType
+        self.dragGestureEnabled = dragGestureEnabled
+    }
+
+}
+
 // MARK: - StandardChartElementModel
 
 struct StandardChartElementModel {

@@ -11,8 +11,10 @@ public struct StandardCardHeaderView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                cardHeader.leadIcon
-                    .foregroundColor(cardHeader.titleColor)
+                if let leadIcon = cardHeader.leadIcon {
+                    cardHeader.leadIcon
+                        .foregroundColor(cardHeader.titleColor)
+                }
                 Text(cardHeader.title)
                     .cardTitleTextModifier(color: cardHeader.titleColor)
                 Spacer()

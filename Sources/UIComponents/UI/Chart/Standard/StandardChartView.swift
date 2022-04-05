@@ -19,11 +19,7 @@ public struct StandardChartView: View {
     @State private var elemWidth: CGFloat = 14
     @State private var chartSpacing: CGFloat = 3
 
-    private let chartType: StandardChartType
-    private let points: [ChartPointModel]
-    private let chartHeight: CGFloat
-    private let timeLineType: OXChartLineType
-    private let dragGestureEnabled: Bool
+    private let model: StandardChartModel
 
     // MARK: - Public properties
 
@@ -31,7 +27,7 @@ public struct StandardChartView: View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: Constant.stackSpacing) {
 
-                if self.dragGestureEnabled {
+                if model.dragGestureEnabled {
                     Text(self.selectedIndex >= 0 ? self.getTapDescription(for: self.selectedIndex) : "")
                         .frame(height: Constant.tapDescriptionHeight)
                 }
@@ -39,23 +35,23 @@ public struct StandardChartView: View {
                 Spacer()
 
                 HStack(alignment: .bottom, spacing: self.chartSpacing) {
-                    ForEach(0 ..< self.points.count, id: \.self) { index in
+                    ForEach(0 ..< model.points.count, id: \.self) { index in
                         VStack {
                             if selectedIndex == index {
-                                self.getChartElement(value: points[index].value)
+                                self.getChartElement(value: model.points[index].value)
                                     .colorInvert()
                             } else {
-                                self.getChartElement(value: points[index].value)
+                                self.getChartElement(value: model.points[index].value)
                             }
 
-                            if self.timeLineType.isOXLineNeeded {
+                            if model.timeLineType.isOXLineNeeded {
                                 self.getOXLineElement()
                             }
                         }
 
-                        switch self.chartType {
+                        switch model.chartType {
                         case .verticalProgress:
-                            if index != self.points.count - 1 {
+                            if index != model.points.count - 1 {
                                 Spacer()
                             }
                         default:
@@ -63,15 +59,15 @@ public struct StandardChartView: View {
                         }
                     }
                 }
-                .allowsHitTesting(dragGestureEnabled)
+                .allowsHitTesting(model.dragGestureEnabled)
                 .gesture(
                     DragGesture(
                         minimumDistance: 5,
                         coordinateSpace: .global
                     ).onChanged { gesture in
-                        let selected = Int(gesture.location.x / (geometry.size.width / (CGFloat(points.count) - self.chartSpacing)))
+                        let selected = Int(gesture.location.x / (geometry.size.width / (CGFloat(model.points.count) - self.chartSpacing)))
 
-                        if selected != selectedIndex, selected < points.count {
+                        if selected != selectedIndex, selected < model.points.count {
                             selectedIndex = selected
                             UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 0.6)
                         }
@@ -80,15 +76,15 @@ public struct StandardChartView: View {
                     }
                 )
 
-                OXChartLineView(chartLineType: self.timeLineType)
+                OXChartLineView(chartLineType: model.timeLineType)
             }
             .onAppear {
-                let chartWidth = CGFloat(points.count) * Constant.standardWidth + self.chartSpacing * CGFloat(points.count - 1)
+                let chartWidth = CGFloat(model.points.count) * Constant.standardWidth + self.chartSpacing * CGFloat(model.points.count - 1)
                 if chartWidth > geometry.size.width {
-                    self.elemWidth = abs(geometry.size.width - self.chartSpacing * CGFloat(points.count - 1)) / CGFloat(points.count)
+                    self.elemWidth = abs(geometry.size.width - self.chartSpacing * CGFloat(model.points.count - 1)) / CGFloat(model.points.count)
                 }
 
-                switch self.chartType {
+                switch model.chartType {
                 case .verticalProgress:
                     self.chartSpacing = 0
                 default:
@@ -96,34 +92,24 @@ public struct StandardChartView: View {
                 }
             }
         }
-        .frame(height: chartHeight + (self.timeLineType.isOXLineNeeded ? 30 : 0) + (self.timeLineType.isTimeLineNeeded ? 30 : 0) + (dragGestureEnabled ? 16 : 0))
+        .frame(height: model.chartHeight + (model.timeLineType.isOXLineNeeded ? 30 : 0) + (model.timeLineType.isTimeLineNeeded ? 30 : 0) + (model.dragGestureEnabled ? 16 : 0))
     }
 
     // MARK: - Init
 
-    public init(
-        chartType: StandardChartType,
-        points: [ChartPointModel],
-        chartHeight: CGFloat,
-        timeLineType: OXChartLineType,
-        dragGestureEnabled: Bool = true
-    ) {
-        self.chartType = chartType
-        self.points = points
-        self.chartHeight = chartHeight
-        self.timeLineType = timeLineType
-        self.dragGestureEnabled = dragGestureEnabled
+    public init(model: StandardChartModel) {
+        self.model = model
     }
 
     // MARK: - Private methods
 
     private func getChartElement(value: Double) -> some View {
-        let minimum = self.points.map{ $0.value}.min() ?? 0
-        let maximum = self.points.map{ $0.value}.max() ?? 0
+        let minimum = model.points.map{ $0.value}.min() ?? 0
+        let maximum = model.points.map{ $0.value}.max() ?? 0
 
-        let height = max(chartHeight * 0.2, chartHeight * ((value - minimum) / (maximum - minimum)))
+        let height = max(model.chartHeight * 0.2, model.chartHeight * ((value - minimum) / (maximum - minimum)))
 
-        switch chartType {
+        switch model.chartType {
         case .phasesChart:
             return StandardChartElementView(
                 chartElement: StandardChartElementModel(
@@ -144,7 +130,7 @@ public struct StandardChartView: View {
             return StandardChartElementView(
                 chartElement: StandardChartElementModel(
                     width: elemWidth,
-                    height: chartHeight,
+                    height: model.chartHeight,
                     type: .rectangularFilled(
                         foregroundElementColor: foregroundElementColor,
                         backgroundElementColor: backgroundElementColor,
@@ -164,9 +150,9 @@ public struct StandardChartView: View {
     }
 
     private func getTapDescription(for index: Int) -> String {
-        let item = self.points[index]
+        let item = model.points[index]
 
-        switch self.chartType {
+        switch model.chartType {
         case .phasesChart:
             let phaseDescription = (item.value < 0.55
                                     ? "Deep sleep phase"
@@ -178,7 +164,7 @@ public struct StandardChartView: View {
         case .defaultChart(let barType, let stringFormatter):
             var format: Date.StringFormatType = .time
 
-            if case .some(_, let formatType) = self.timeLineType,
+            if case .some(_, let formatType) = model.timeLineType,
                let dateFormatType = formatType {
                 format = dateFormatType
             }
