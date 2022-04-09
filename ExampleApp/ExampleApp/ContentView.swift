@@ -93,15 +93,16 @@ struct ContentView: View {
                         .padding(.top)
 
                         StatisticalIndicatorCardView(
-                            indicatorCard: .init(
+                            indicatorCard: StatisticalIndicatorCardModel(
+                                titleLeadIcon: .init(systemName: "heart.fill"),
+                                title: "Heart: Indicator",
                                 indicator: IndicatorModel(
-                                    name: "IndicatorName",
-                                    currentValue: 0.0,
-                                    unit: "unit"
+                                    name: "RSSDN",
+                                    currentValue: 1.21,
+                                    unit: "ms"
                                 ),
-                                description: "Description",
-                                feedback: "Feedback",
-                                isPositive: true
+                                feedback: "You should rest more during the day according to your RSSDN value.",
+                                isPositive: false
                             ),
                             onQuestionMarkTapAction: {
                                 print("Question mark tapped!")
