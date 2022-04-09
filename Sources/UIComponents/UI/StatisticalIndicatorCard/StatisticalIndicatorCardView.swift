@@ -19,13 +19,15 @@ public struct StatisticalIndicatorCardView: View {
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
                     Text("\(indicatorCard.indicator.name) – \(String(format: "%.2f \(indicatorCard.indicator.unit)", indicatorCard.indicator.currentValue))")
-                        .foregroundColor(indicatorCard.isPositive ? .green.opacity(0.9) : .red.opacity(0.9))
+                        .foregroundColor(indicatorCard.isPositive ? .green : .red.opacity(0.9))
                         .bold()
                         .font(.system(size: 24))
                         .padding(.top, 8)
 
                     if let feedback = indicatorCard.feedback {
                         Text(feedback)
+                            .fontWeight(.semibold)
+                            .foregroundColor(ColorsRepository.Text.secondary)
                             .padding(.top, 8)
                             .font(.system(size: 14))
                     }

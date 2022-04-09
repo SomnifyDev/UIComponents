@@ -102,7 +102,7 @@ struct ContentView: View {
                                     unit: "ms"
                                 ),
                                 feedback: "You should rest more during the day according to your RSSDN value.",
-                                isPositive: false
+                                isPositive: true
                             ),
                             onQuestionMarkTapAction: {
                                 print("Question mark tapped!")
