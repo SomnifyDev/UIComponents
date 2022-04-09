@@ -4,19 +4,22 @@ import SwiftUI
 
 public struct StatisticalIndicatorCardModel: Equatable {
 
+    let titleLeadIcon: Image?
+    let title: String
     let indicator: IndicatorModel
-    let description: String
     let feedback: String
     let isPositive: Bool
 
     public init(
+        titleLeadIcon: Image?,
+        title: String,
         indicator: IndicatorModel,
-        description: String,
         feedback: String,
         isPositive: Bool
     ) {
+        self.titleLeadIcon = titleLeadIcon
+        self.title = title
         self.indicator = indicator
-        self.description = description
         self.feedback = feedback
         self.isPositive = isPositive
     }
