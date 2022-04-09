@@ -9,6 +9,7 @@ struct CardBackground: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            .frame(maxWidth: .infinity)
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, verticalPadding)
             .background(self.color)

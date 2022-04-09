@@ -6,14 +6,16 @@ public struct StandardCardWithContentView<Content: View>: View {
 
     // MARK: - Private properties
 
-    private let cardHeader: StandardCardHeaderModel
+    private let cardHeader: StandardCardHeaderModel?
     private let content: () -> Content
 
     // MARK: - Public properties
 
     public var body: some View {
         VStack(alignment: .leading) {
-            StandardCardHeaderView(cardHeader: cardHeader)
+            if let cardHeader = cardHeader {
+                StandardCardHeaderView(cardHeader: cardHeader)
+            }
             content()
         }
         .roundedCardBackground(color: ColorsRepository.Card.cardBackground)
@@ -22,7 +24,7 @@ public struct StandardCardWithContentView<Content: View>: View {
     // MARK: - Init
 
     public init(
-        cardHeader: StandardCardHeaderModel,
+        cardHeader: StandardCardHeaderModel?,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.cardHeader = cardHeader
