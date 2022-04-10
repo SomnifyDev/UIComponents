@@ -5,10 +5,10 @@ public typealias GridPlacement = (vertical: Int, horizontal: Int)
 
 // MARK: - GridCardModel
 
-public struct GridCardModel<Content: View> {
+public struct GridCardModel {
 
     let header: StandardCardHeaderModel?
-    let content: GridCardContentModel<Content>
+    let content: GridCardContentModel
 
     /// Spacing between rows
     let rowSpacing: CGFloat?
@@ -22,7 +22,7 @@ public struct GridCardModel<Content: View> {
         rowSpacing: CGFloat? = 16,
         columnSpacing: CGFloat? = nil,
         shouldAddSpacersBetweenColumns: Bool = true,
-        content: GridCardContentModel<Content>
+        content: GridCardContentModel
     ) {
         self.header = header
         self.rowSpacing = rowSpacing
@@ -35,14 +35,14 @@ public struct GridCardModel<Content: View> {
 
 // MARK: - GridCardContentModel
 
-public struct GridCardContentModel<Content: View> {
+public struct GridCardContentModel {
 
     let placement: GridPlacement
-    let elements: [GridCardContentElementModel<Content>]
+    let elements: [GridCardContentElementModel]
 
     public init(
         placement: GridPlacement,
-        elements: [GridCardContentElementModel<Content>]
+        elements: [GridCardContentElementModel]
     ) {
         self.placement = placement
         self.elements = elements
@@ -52,15 +52,23 @@ public struct GridCardContentModel<Content: View> {
 
 // MARK: - GridCardContentElementModel
 
-public struct GridCardContentElementModel<Content: View>: Identifiable {
+public enum GridCardContentElementModel: Identifiable {
 
-    public let id = UUID()
-    let content: () -> Content
+    case fulfilled(AnyView)
+    case empty
+
+    public var id: UUID {
+        get { UUID() }
+    }
 
     public init(
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping () -> AnyView?
     ) {
-        self.content = content
+        if let content = content() {
+            self = .fulfilled(content)
+        } else {
+            self = .empty
+        }
     }
 
 }

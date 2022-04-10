@@ -1,28 +1,29 @@
 import SwiftUI
 
-public struct GridCardView<Content: View>: View {
+public struct GridCardView: View {
 
-    let model: GridCardModel<Content>
+    let model: GridCardModel
 
     public var body: some View {
         StandardCardWithContentView(
             cardHeader: model.header
         ) {
-            VStack(
-                alignment: .leading,
-                spacing: model.rowSpacing
-            ) {
-                ForEach(0..<model.content.placement.vertical, id: \.self) { verticalPosition in
-                    HStack(
-                        alignment: .bottom,
-                        spacing: model.shouldAddSpacersBetweenColumns ? 0 : model.columnSpacing
-                    ) {
-                        ForEach(0..<model.content.placement.horizontal, id: \.self) { horizontalPosition in
-                            model.content.elements[verticalPosition * model.content.placement.vertical + horizontalPosition].content()
-                            if model.shouldAddSpacersBetweenColumns,
-                               !(horizontalPosition == model.content.placement.horizontal - 1) {
-                                Spacer()
-                            }
+            ForEach(0..<model.content.placement.vertical, id: \.self) { verticalPosition in
+                HStack(
+                    alignment: .bottom,
+                    spacing: model.shouldAddSpacersBetweenColumns ? 0 : model.columnSpacing
+                ) {
+                    ForEach(0..<model.content.placement.horizontal, id: \.self) { horizontalPosition in
+                        let element = model.content.elements[verticalPosition * model.content.placement.horizontal + horizontalPosition]
+                        switch element {
+                        case .fulfilled(let view):
+                            view
+                        case .empty:
+                            EmptyView()
+                        }
+                        if model.shouldAddSpacersBetweenColumns,
+                           !(horizontalPosition == model.content.placement.horizontal - 1) {
+                            Spacer()
                         }
                     }
                 }
@@ -31,7 +32,7 @@ public struct GridCardView<Content: View>: View {
     }
 
     public init(
-        model: GridCardModel<Content>
+        model: GridCardModel
     ) {
         self.model = model
     }
@@ -44,31 +45,50 @@ struct SwiftUIView_Previews: PreviewProvider {
             Color.gray.opacity(0.2)
                 .ignoresSafeArea()
             GridCardView(
-                model: GridCardModel<AnyView>.init(
+                model: GridCardModel.init(
                     header: nil,
                     rowSpacing: 8,
                     columnSpacing: 20,
                     shouldAddSpacersBetweenColumns: false,
                     content: .init(
-                        placement: (1, 4),
+                        placement: (2, 4),
                         elements: [
-                            .init(content: {
+                            .fulfilled(
                                 AnyView(
-                                    VStack(alignment: .leading) {
-                                        Text("Title")
-                                        Text("Subtitile")
+                                    VStack {
+                                        Text("title1")
+                                        Text("subtitle")
                                     }
                                 )
-                            }),
-                            .init(content: {
-                                AnyView(Text("Text2"))
-                            }),
-                            .init(content: {
-                                AnyView(Text("Text3"))
-                            }),
-                            .init(content: {
-                                AnyView(Text("Text4"))
-                            }),
+                            ),
+                            .empty,
+                            .fulfilled(
+                                AnyView(
+                                    VStack {
+                                        Text("title2")
+                                        Text("subtitle")
+                                    }
+                                )
+                            ),
+                            .empty,
+                            .empty,
+                            .empty,
+                            .fulfilled(
+                                AnyView(
+                                    VStack {
+                                        Text("title3")
+                                        Text("subtitle")
+                                    }
+                                )
+                            ),
+                            .fulfilled(
+                                AnyView(
+                                    VStack {
+                                        Text("title4")
+                                        Text("subtitle")
+                                    }
+                                )
+                            ),
                         ]
                     )
                 )
