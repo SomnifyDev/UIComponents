@@ -66,8 +66,9 @@ public enum GridCardContentElementModel: Identifiable {
     ) {
         if let content = content() {
             self = .fulfilled(content)
+        } else {
+            self = .empty
         }
-        self = .empty
     }
 
 }
